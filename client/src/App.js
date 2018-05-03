@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Form from './components/Form'
 import './App.css';
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
   }
 
   callApi = async () => {
-    const response = await fetch('/api/hello');
+    const response = await fetch('/form');
     const body = await response.json();
 
     if (response.status !== 200) throw Error(body.message);
@@ -25,6 +25,7 @@ class App extends Component {
     return (
       <div className="App">
       <p className="App-intro">{this.state.response}</p>
+      <Form />
       </div>
     );
   }

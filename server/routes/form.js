@@ -2,6 +2,7 @@
 
 const { Router } = require("express");
 const router = Router();
+const {getSubstances} = require('../controllers/formCtrl')
 
-router.use(require("./form"));
+router.get("/form", getSubstances)
 module.exports = router;
