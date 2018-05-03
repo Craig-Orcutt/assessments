@@ -1,0 +1,21 @@
+{
+  "substances":
+  [
+    {
+      "name": "alcohol",
+      "points": 2
+    },
+    {
+      "name": "marijuana",
+      "points": 1
+    },
+    {
+      "name": "benzodiazepines",
+      "points": 2
+    },
+    {
+      "name": "heroin",
+      "points": 2
+    }
+  ]
+}
