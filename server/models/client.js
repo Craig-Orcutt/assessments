@@ -13,7 +13,12 @@ module.exports = (sequelize, DataTypes) => {
   }, {tableName: "clients"});
   Client.associate = function(models) {
     // associations can be defined here
-
+    Client.belongsTo(models.User, {
+      foreignKey: "user_id"
+    });
+    Client.belongsToMany(models.Substance, {
+      through: 'ClientSubstance'
+    })
   };
   return Client;
 };
