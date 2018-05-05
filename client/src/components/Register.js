@@ -3,7 +3,8 @@ import React from "react";
 class Register extends React.Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    isOutreach: false,
   }
 
   change = e => {
@@ -27,6 +28,8 @@ class Register extends React.Component {
           <input type="password" />
           <label>Re-Enter Password</label>
           <input name="password" value={this.state.password} type="password" onChange={e => this.change(e)} />
+          <label>Outreach?</label>
+          <input type="checkbox" name='isOutreach' value={this.state.isOutreach} onClick={() => {this.setState({isOutreach: !this.state.isOutreach})}}/>
           <button onClick={e => this.onSubmit(e)}>Register</button>
         </form>
       </div>
