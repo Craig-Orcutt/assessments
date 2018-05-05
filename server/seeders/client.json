@@ -1,0 +1,44 @@
+{
+  "clients":
+  [
+    {
+      "first_name": "Craig ",
+      "last_name": "Orcutt",
+      "gender": "male",
+      "dob": "07/13/1988",
+      "frequency": "daily",
+      "last_use": "05/05/18",
+      "previous_treatment": "Six times over the last three years, long term inpatient",
+      "mental_health": "",
+      "si_hi":"yes, SI 2 weeks ago",
+      "progress":"",
+      "severity": 0
+    },
+    {
+      "first_name": "Greg ",
+      "last_name": "Komara",
+      "gender": "male",
+      "dob": "02/13/1990",
+      "frequency": "monthly",
+      "last_use": "03/05/18",
+      "previous_treatment": "2 times over the last year, long term outpatient",
+      "mental_health": "Bi-Polar, ADD",
+      "si_hi":"",
+      "progress":"",
+      "severity": 0
+    },
+    {
+      "first_name": "Kate ",
+      "last_name": "Grant",
+      "gender": "female",
+      "dob": "09/18/1989",
+      "frequency": "monthly",
+      "last_use": "01/05/18",
+      "previous_treatment": "",
+      "mental_health": "BorderLine",
+      "si_hi":"Twice in the last six months",
+      "progress":"",
+      "severity":0
+    }
+  ]
+}
