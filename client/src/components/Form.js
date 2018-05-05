@@ -10,8 +10,9 @@ class Form extends React.Component {
     frequecy: "",
     previousMentalHealth: "",
     // state of hide/show for text area based on click
-    showing : false
+    showing : false,
   }
+
 // sets state of changes made to strings in form
   change = e => {
     this.props.onChange({ [e.target.name]: e.target.value });
@@ -41,6 +42,23 @@ class Form extends React.Component {
       gender: "",
       substancesUsed: []
     })
+  };
+  componentDidMount() {
+    this.callApi()
+      .then((data)=>{
+        console.log('data', data);
+        
+        
+      })
+      .catch(err => console.log(err));
+  }
+  callApi = async () => {
+    const response = await fetch('http://localhost:5000/server/form');
+    const body = await response.json();
+
+    if (response.status !== 200) throw Error(body.message);
+
+    return body;
   };
   render(){
     // sets state of showing or hiding the text area
