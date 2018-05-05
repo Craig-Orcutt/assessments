@@ -1,0 +1,29 @@
+{
+  "clientSubstance":
+  [
+    {
+      "client_id": 1,
+      "substance_id": 2
+    },
+    {
+      "client_id": 1,
+      "substance_id": 1
+    },
+    {
+      "client_id": 2,
+      "substance_id": 3
+    },
+    {
+      "client_id": 3,
+      "substance_id": 2
+    },
+    {
+      "client_id": 3,
+      "substance_id": 4
+    },
+    {
+      "client_id": 3,
+      "substance_id": 1
+    }
+  ]
+}
