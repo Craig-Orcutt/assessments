@@ -1,21 +1,25 @@
 import React from 'react';
 import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
-
+import { RadioGroup, RadioButton } from 'react-radio-buttons';
 class Form extends React.Component {
   state = {
     firstName: "",
     lastName: "",
+    age: '',
     gender: "",
     substancesUsed: [],
-    frequecy: "",
-    previousMentalHealth: "",
+    frequency: '',
+    useLength: '',
+    previousSubstance: '',
+    previousMentalHealth: '',
+    si_hi: '',
     // state of hide/show for text area based on click
     showing : false,
   }
 
 // sets state of changes made to strings in form
   change = e => {
-    this.props.onChange({ [e.target.name]: e.target.value });
+    // this.props.onChange({ [e.target.name]: e.target.value });
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -36,30 +40,30 @@ class Form extends React.Component {
     e.preventDefault();
     // this.props.onSubmit(this.state);
     console.log("this", this.state);
-    this.setState({
-      firstName: "",
-      lastName: "",
-      gender: "",
-      substancesUsed: []
-    })
+    // this.setState({
+    //   firstName: "",
+    //   lastName: "",
+    //   age: '',
+    //   gender: "",
+    //   substancesUsed: [],
+    //   frequency: '',
+    //   useLength: '',
+    //   previousSubstance: '',
+    //   previousMentalHealth: '',
+    //   si_hi: ''
+    // })
+    // const {firstName,lastName,age,gender,substancesUsed,frequency,useLength,previousSubstance,previousMentalHealth,si_hi} = this.state
+    this.sendForm(this.state)
   };
-  componentDidMount() {
-    this.callApi()
-      .then((data)=>{
-        console.log('data', data);
-        
-        
-      })
-      .catch(err => console.log(err));
-  }
-  callApi = async () => {
-    const response = await fetch('http://localhost:5000/server/form');
-    const body = await response.json();
 
-    if (response.status !== 200) throw Error(body.message);
+  sendForm = async () => {
+  const response = await fetch('http://localhost:5000/server/form');
+  const body = await response.json();
 
-    return body;
-  };
+  if (response.status !== 200) throw Error(body.message);
+
+  return body;
+};
   render(){
     // sets state of showing or hiding the text area
     const { showing } = this.state;
@@ -102,32 +106,73 @@ class Form extends React.Component {
           <Checkbox value="heroin"/>
           </CheckboxGroup>
           <br/>
-            <label> Frequency of Use</label>
-            <label>Daily</label>
-            <input type="radio" name="frequency" value="daily" />
-            <label>Weekly</label>
-            <input type="radio" name="frequency" value="weekly" />
-            <label>Monthly</label>
-            <input type="radio" name="frequency" value="monthly" />
-            <label>Occasionally</label>
-            <input type="radio" name="frequency" value="occasionally" />
+
+          <RadioGroup name='frequency' value={this.state.frequency} onChange={ this.useFrequency }>
+            <RadioButton value="daily">
+              Daily
+            </RadioButton>
+            <RadioButton value="weekly">
+              Weekly
+            </RadioButton>
+            <RadioButton value="monthly">
+              Monthly
+            </RadioButton>
+            <RadioButton value="occasionally">
+              Occasionally
+            </RadioButton>
+          </RadioGroup>
+
           <br/>
-          <label>Previous Mental Health Treament?</label>
-          <CheckboxGroup
-          name="previousMentalHealth">
+          <label htmlFor="useLengthRef">Length Of Use</label>
+          <input type="text" name="useLength" value={this.state.useLength} onChange={e => this.change(e)}   />
+
+  
+          <label>Previous Substance Abuse Treament</label>
+          <CheckboxGroup name="previouseSubstance">
+            <label>Yes</label>
+            <Checkbox onClick={() => this.setState({ showing: !this.state.showing })} />
+            <textarea
+              name="previousSubstance"
+              value={this.state.previousSubstance}
+              onChange={e => this.change(e)}  
+              placeholder="Please Provide Further Information"
+              // setting style of hide/show based on whether yes has been clicked
+              style={{ display: showing ? "inline" : "none" }}
+            />
+            <label>No</label>
+            <Checkbox value={"no"} />
+          </CheckboxGroup>
+          <label>Previouse Mental Health Diagnosis</label>
+          <CheckboxGroup name="previouseMentalHealth">
             <label>Yes</label>
             <Checkbox onClick={() => this.setState({ showing: !showing })} />
             <textarea
               name="previousMentalHealth"
               value={this.state.previousMentalHealth}
               onChange={e => this.change(e)}  
-              placeholder="Please Provide Futher Information"
+              placeholder="Please Provide Further Information"
               // setting style of hide/show based on whether yes has been clicked
-              style={{ display: (showing ? 'inline' : 'none') }}
-              ></textarea>
+              style={{ display: showing ? "inline" : "none" }}
+            />
             <label>No</label>
-            <Checkbox value={'no'}/>
+            <Checkbox value={"no"} />
           </CheckboxGroup>
+          <label>Previous SI/HI?</label>
+          <CheckboxGroup name="si_hi">
+            <label>Yes</label>
+            <Checkbox onClick={() => this.setState({ showing: !showing })} />
+            <textarea
+              name="si_hi"
+              value={this.state.si_hi}
+              onChange={e => this.change(e)}  
+              placeholder="Please Provide Further Information"
+              // setting style of hide/show based on whether yes has been clicked
+              style={{ display: showing ? "inline" : "none" }}
+            />
+            <label>No</label>
+            <Checkbox value={"no"} />
+          </CheckboxGroup>
+
           <button onClick={e => this.onSubmit(e)}>Subbbmit</button>
       </form>
     );
