@@ -12,7 +12,7 @@ module.exports.getSubstances = (req, res, next) => {
 }
 
 module.exports.addClientSubstance = (req,res,next)=> {
-  let {client_substance} = req.app.get('models');
+  let { client_substance} = req.app.get('models');
     client_substance.create({ ClientId, SubstanceId })
       .then(() => {
         res.status(201).end(); // 201 = new resource created
@@ -21,18 +21,33 @@ module.exports.addClientSubstance = (req,res,next)=> {
         next(err);
       });
 }
-// let {Client} = req.app.get("models");
-// Client.findById(ClientId)
-// .then(foundClient => {
-//     foundClient.addsubstanceList(SubstanceId)
-//         .then((newRecord) => {
-// res.status(201).json(newRecord);
-//         })
-//       })
+module.exports.addClientForm = (req,res,next)=> {
+  let { Client} = req.app.get('models');
+  Client.create({
+    first_name : req.body.firstName,
+    last_name: req.body.lastName,
+    dob: req.body.age,
+    gender: req.body.gender,
+    frequency: req.body.frequency,
+    last_use: req.body.last_use,
+    length_of_use: req.body.useLength,
+    previous_treatment: req.body.previousSubstance,
+    mental_health: req.body.previousMentalHealth,
+    si_hi: req.body.si_hi
 
-// module.exports.addClientForm = (req,res,next)=> {
+  })
+  .then(() => {
+    res.status(201).end(); // 201 = new resource created
+  })
+  .catch(err => {
+    next(err);
+  });
+}
+
+
+// module.exports.addClientForm = ({app, }req,res,next)=> {
 //   let {Client} = req.app.get("models");
-//   Client.findById(ClientId)
+//   Client.findById(client_id)
 //   .then(foundClient => {
 //       foundClient.addsubstanceList(SubstanceId)
 //           .then((newRecord) => {
