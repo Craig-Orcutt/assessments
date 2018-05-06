@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
   Substance.associate = function(models) {
     // associations can be defined here
     Substance.belongsToMany(models.Client, {
-      as: "substanceList",
       through: 'client_substance'
     })
   };
