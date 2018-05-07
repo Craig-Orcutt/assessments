@@ -1,8 +1,11 @@
 import React from "react";
+import axios from 'axios';
 
 class Register extends React.Component {
+  url= "http://localhost:5000";
   state = {
-    email: "",
+    username: '',
+    email: '',
     password: "",
     isOutreach: false,
   }
@@ -11,11 +14,19 @@ class Register extends React.Component {
     this.setState({
       [e.target.name]: e.target.value
     })
+    console.log('this', this.state.username);
+    
   }
 
   onSubmit = (e) => {
     e.preventDefault();
     console.log("this", this.state);
+    axios.post(`${this.url}/server/register`, this.state)
+    .then((data)=> {
+      console.log('registered', data);
+      console.log('currentUser', data.data.currentUser);
+      
+    })
   }
   render() {
     return (
@@ -24,6 +35,8 @@ class Register extends React.Component {
         <form>
           <label>Email</label>
           <input name="email" value={this.state.email} type="text" onChange={e => this.change(e)}/>
+          <label>Username</label>
+          <input name="username" value={this.state.username} type="text" onChange={e => this.change(e)}/>
           <label>Password</label>
           <input type="password" />
           <label>Re-Enter Password</label>

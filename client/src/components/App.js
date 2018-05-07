@@ -1,29 +1,30 @@
 import React, { Component } from 'react';
 import './App.css';
+import Login from './Login';
 
 class App extends Component {
   state = {
-    response: ''
+    username: '',
+    userid: '',
+    userIsOutreach: false
   };
 
-  componentDidMount() {
-    this.callApi()
-      .then(res => this.setState({ response: res.express }))
-      .catch(err => console.log(err));
-  }
+//  
+setUser = (user) => {
+  console.log('userApp', user);
+  this.setState({
+    username: user.username,
+    userid: user.id,
+    userIsOutreach: user.isOutreach
+  })
+  console.log('hellooooo from setUser', this.state);
+  
+}
 
-  callApi = async () => {
-    const response = await fetch('/form');
-    const body = await response.json();
-
-    if (response.status !== 200) throw Error(body.message);
-
-    return body;
-  };
   render() {
     return (
       <div className="App">
-      <p className="App-intro">{this.state.response}</p>
+        <Login setUser={this.setUser}/>
       </div>
     );
   }
