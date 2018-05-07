@@ -51,6 +51,10 @@ module.exports.login = (req, res, next) => {
         return next(err);
       }
       console.log("authenticated", user);
+      let currentUser = { username: user.username, id: user.id, isOutreach: user.isOutreach };
+      console.log('CURRENTUSER', currentUser);
+      
+      req.app.set('user', currentUser);
       res.status(200).json({ username: user.username, id: user.id });
     });
   })(req, res, next); // note that authenticate() is called from within the route handler, rather than being used as route middleware. This gives the callback access to the req and res objects through closure.
@@ -64,8 +68,3 @@ module.exports.logout = (req, res, next) => {
     res.status(200).end();
   });
 };
-
-
-module.exports.test = (req,res,next) => {
-  console.log("hello", req.body);
-}
