@@ -1,7 +1,27 @@
 import React from "react";
 import {Link} from 'react-router-dom'
+import axios from 'axios';
 
 class Login extends React.Component {
+  url = "http://localhost:5000";
+
+  userName = React.createRef();
+  userPwd = React.createRef();
+
+  handleClick = () => {
+
+    let user = {
+      username: this.userName.value,
+      password: this.userPwd.value
+    };
+    console.log('user', user);
+    
+    axios.post(`${this.url}/server/login`, user)
+    .then( data  => {
+      console.log('logged in', data);
+    });
+  }
+
   render() {
     return (
       <div className="formBody">
@@ -10,11 +30,11 @@ class Login extends React.Component {
           <button type="button">Register</button>
         </Link>
         <form>
-          <label>Email</label>
-          <input type="text" name="userEmail" />
+          <label>User Name</label>
+          <input type="text" ref={input => {this.userName = input}} />
           <label>Password</label>
-          <input type="password" name="userPwd" />
-          <input type="submit" name="" id="" />
+          <input type="password" ref={input => {this.userPwd = input}} />
+          <button onClick={this.handleClick}>Login</button>
         </form>
       </div>
     );

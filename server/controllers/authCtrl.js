@@ -64,3 +64,8 @@ module.exports.logout = (req, res, next) => {
     res.status(200).end();
   });
 };
+
+
+module.exports.test = (req,res,next) => {
+  console.log("hello", req.body);
+}
