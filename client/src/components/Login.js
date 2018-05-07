@@ -8,8 +8,8 @@ class Login extends React.Component {
   userName = React.createRef();
   userPwd = React.createRef();
 
-  handleClick = () => {
-
+  handleClick = (e) => {
+    e.preventDefault();
     let user = {
       username: this.userName.value,
       password: this.userPwd.value
@@ -17,8 +17,13 @@ class Login extends React.Component {
     console.log('user', user);
     
     axios.post(`${this.url}/server/login`, user)
-    .then( data  => {
-      console.log('logged in', data);
+    .then( (user) => {
+      console.log('USER LOGIN', user);
+      this.props.setUser(user.data);
+      
+    })
+    .catch(function (error) {
+      console.log(error);
     });
   }
 
@@ -34,7 +39,7 @@ class Login extends React.Component {
           <input type="text" ref={input => {this.userName = input}} />
           <label>Password</label>
           <input type="password" ref={input => {this.userPwd = input}} />
-          <button onClick={this.handleClick}>Login</button>
+          <button onClick={e => this.handleClick(e)}>Login</button>
         </form>
       </div>
     );
