@@ -9,6 +9,8 @@ const passport = require("passport");
 
 const bodyParser = require("body-parser");
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 const routes = require("./server/routes");
 
 app.set("models", require("./server/models"));

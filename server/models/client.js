@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     dob: DataTypes.STRING,
     frequency: DataTypes.STRING,
     last_use: DataTypes.STRING,
+    length_of_use: DataTypes.STRING,
     previous_treatment: DataTypes.TEXT,
     mental_health: DataTypes.STRING,
     si_hi: DataTypes.STRING,

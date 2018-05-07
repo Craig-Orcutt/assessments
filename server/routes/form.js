@@ -2,8 +2,8 @@
 
 const { Router } = require("express");
 const router = Router();
-const {getSubstances, addClientSubstance} = require('../controllers/formCtrl')
+const {getSubstances, addClientForm} = require('../controllers/formCtrl')
 
 router.get("/server/form", getSubstances)
-router.post("/server/submitform", addClientSubstance)
+router.post("/submitform", addClientForm)
 module.exports = router;
