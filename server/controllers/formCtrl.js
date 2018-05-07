@@ -13,7 +13,9 @@ module.exports.getSubstances = (req, res, next) => {
 
 module.exports.addClientSubstance = (req,res,next)=> {
   let { client_substance} = req.app.get('models');
-    client_substance.create({ ClientId, SubstanceId })
+    client_substance.create({ 
+      ClientId: req.body.clientId, 
+      SubstanceId })
       .then(() => {
         res.status(201).end(); // 201 = new resource created
       })
@@ -21,10 +23,11 @@ module.exports.addClientSubstance = (req,res,next)=> {
         next(err);
       });
 }
+
 module.exports.addClientForm = (req,res,next)=> {
-  let { Client} = req.app.get('models');
+  let { Client , client_substance} = req.app.get('models');
   Client.create({
-    first_name : req.body.firstName,
+    first_name : req.body.first_name,
     last_name: req.body.lastName,
     dob: req.body.age,
     gender: req.body.gender,
@@ -36,9 +39,9 @@ module.exports.addClientForm = (req,res,next)=> {
     si_hi: req.body.si_hi
 
   })
-  .then(() => {
-    res.status(201).end(); // 201 = new resource created
-  })
+    .then(()=>{
+      res.status(201).end(); // 201 = new resource created
+    })
   .catch(err => {
     next(err);
   });
