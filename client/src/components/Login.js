@@ -12,15 +12,13 @@ class Login extends React.Component {
     e.preventDefault();
     let user = {
       username: this.userName.value,
-      password: this.userPwd.value
+      password: this.userPwd.value,
     };
     console.log('user', user);
-    
     axios.post(`${this.url}/server/login`, user)
     .then( (user) => {
-      console.log('USER LOGIN', user);
-      this.props.setUser(user.data);
-      
+      console.log('USER LOGIN', user.data);
+      this.props.setUser(user.data)
     })
     .catch(function (error) {
       console.log(error);

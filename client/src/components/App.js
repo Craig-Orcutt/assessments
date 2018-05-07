@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import './App.css';
-import Login from '/Login';
+import Login from './Login';
 
 class App extends Component {
-  // state = {
-  //   response: ''
-  // };
+  state = {
+    username: '',
+    userid: '',
+    userIsOutreach: false
+  };
 
 //  
 setUser = (user) => {
   console.log('userApp', user);
+  this.setState({
+    username: user.username,
+    userid: user.id,
+    userIsOutreach: user.isOutreach
+  })
+  console.log('hellooooo from setUser', this.state);
   
-  // this.setState
 }
 
   render() {
