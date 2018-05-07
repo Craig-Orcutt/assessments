@@ -55,7 +55,7 @@ module.exports.login = (req, res, next) => {
       console.log('CURRENTUSER', currentUser);
       
       req.app.set('user', currentUser);
-      res.status(200).json({ username: user.username, id: user.id });
+      res.status(200).json(currentUser);
     });
   })(req, res, next); // note that authenticate() is called from within the route handler, rather than being used as route middleware. This gives the callback access to the req and res objects through closure.
 };
