@@ -4,6 +4,8 @@ module.exports.getSubstances = (req, res, next) => {
   let {Substance} = req.app.get("models");
   Substance.findAll({raw:true})
   .then((data)=>{
+    console.log('user', req.app.get(currentUser));
+    
     res.status(200).json(data);
   })
   .catch(err=>{
