@@ -45,7 +45,7 @@ setUser = (user) => {
     return (
       <div className="App">
         <Login setUser={this.setUser} history={this.history}/>
-        {!this.state.isHiddenForm && <Form />}
+        {!this.state.isHiddenForm && <Form setUser={this.state.userid} />}
         {!this.state.isHiddenOutreach && <Outreach />}
       </div>
     );

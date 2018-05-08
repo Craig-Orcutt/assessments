@@ -1,6 +1,7 @@
 import React from 'react';
 import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
 import { RadioGroup, RadioButton } from 'react-radio-buttons';
+import axios from 'axios'
 class Form extends React.Component {
   state = {
     firstName: "",
@@ -10,21 +11,29 @@ class Form extends React.Component {
     substancesUsed: [],
     frequency: '',
     useLength: '',
+    lastUse: '',
     previousSubstance: '',
     previousMentalHealth: '',
     si_hi: '',
     // state of hide/show for text area based on click
     showing : false,
+    userid : this.props.setUser,
+    points: null
   }
 
+  componentDidMount = () => {
+    
+    
+  }
 // sets state of changes made to strings in form
   change = e => {
     // this.props.onChange({ [e.target.name]: e.target.value });
     this.setState({
       [e.target.name]: e.target.value
     });
+    this.addUpPoints(this.state.substancesUsed)
   };
-// setting state of checkbox group
+  // setting state of checkbox group
   substancesChecked = (newSubs) => {
     this.setState({
       substancesUsed: newSubs
@@ -34,11 +43,38 @@ class Form extends React.Component {
     this.setState({
       frequency: frequecy
     })
+
   }
 
+  addUpPoints = (subs) => {
+    let substances = this.state.substancesUsed;
+    let points = 0;
+    substances.forEach((data)=> {
+      if(data === "marijuana") {
+        points += 1
+        console.log('points in a', points);
+      }
+      else if (data === 'alcohol') {
+        points +=3
+        console.log('points in a', points);
+      }
+      else if( data === 'heroin') {
+        points +=2
+        console.log('points in h', points);
+      }
+      console.log('points overall', points);
+      
+    })
+    this.setState({
+      points: points
+    })
+    console.log('POINTS', points);
+    
+  }
   onSubmit = e => {
     e.preventDefault();
     // this.props.onSubmit(this.state);
+   
     console.log("this", this.state);
     // this.setState({
     //   firstName: "",
@@ -54,16 +90,16 @@ class Form extends React.Component {
     // })
     // const {firstName,lastName,age,gender,substancesUsed,frequency,useLength,previousSubstance,previousMentalHealth,si_hi} = this.state
     this.sendForm(this.state)
+    
   };
 
-  sendForm = async () => {
-  const response = await fetch('http://localhost:5000/server/form');
-  const body = await response.json();
-
-  if (response.status !== 200) throw Error(body.message);
-
-  return body;
-};
+  sendForm = (client) => {
+    axios.post('http://localhost:5000/server/submitForm', client)
+    .then(()=>{
+      console.log('form sent', );
+      
+    })
+  }
   render(){
     // sets state of showing or hiding the text area
     const { showing } = this.state;
@@ -85,6 +121,10 @@ class Form extends React.Component {
             value={this.state.lastName}
             onChange={e => this.change(e)} 
             />
+          
+          <br/>
+          <label>Age</label>
+          <input type="text" name="age" value={this.state.age} onChange={e=> this.change(e)}/>
           <br/>
           <label htmlFor="gender">Gender</label>
           <select name="gender"  value={this.state.gender} onChange={e => this.change(e)}>
@@ -93,7 +133,7 @@ class Form extends React.Component {
           <option name="other" >Female</option>
           </select>
           <br/>
-
+          <label>Substances Used</label>
           <CheckboxGroup 
           name="substancesUsed"
           value={this.state.substancesUsed} 
@@ -106,7 +146,7 @@ class Form extends React.Component {
           <Checkbox value="heroin"/>
           </CheckboxGroup>
           <br/>
-
+          <label>Frequency of Use</label>
           <RadioGroup name='frequency' value={this.state.frequency} onChange={ this.useFrequency }>
             <RadioButton value="daily">
               Daily
@@ -125,8 +165,10 @@ class Form extends React.Component {
           <br/>
           <label htmlFor="useLengthRef">Length Of Use</label>
           <input type="text" name="useLength" value={this.state.useLength} onChange={e => this.change(e)}   />
-
-  
+          <br/>
+          <label>Latest Use</label>
+          <input type="text" name="lastUse" value={this.state.lastUse} onChange={e => this.change(e)}/>
+          <br/>
           <label>Previous Substance Abuse Treament</label>
           <CheckboxGroup name="previouseSubstance">
             <label>Yes</label>

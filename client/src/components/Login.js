@@ -23,7 +23,6 @@ class Login extends React.Component {
     .then( (user) => {
       console.log('USER LOGIN', user.data);
       this.props.setUser(user.data)
-
     })
     .catch(function (error) {
       console.log(error);
