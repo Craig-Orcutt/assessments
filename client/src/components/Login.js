@@ -1,8 +1,12 @@
 import React from "react";
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import { createBrowserHistory as createHistory } from "history";
+
+
 import axios from 'axios';
 
 class Login extends React.Component {
+  history = createHistory(this.props);
   url = "http://localhost:5000";
 
   userName = React.createRef();
@@ -19,10 +23,7 @@ class Login extends React.Component {
     .then( (user) => {
       console.log('USER LOGIN', user.data);
       this.props.setUser(user.data)
-    })
-    .then((user)=>{
-      console.log('data', user);
-      
+
     })
     .catch(function (error) {
       console.log(error);
