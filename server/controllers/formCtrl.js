@@ -29,6 +29,7 @@ module.exports.getSubstances = (req, res, next) => {
 module.exports.addClientForm = (req,res,next)=> {
   let { Client , client_substance} = req.app.get('models');
   console.log('req.body', req.body);
+  let substances = req.body.substancesUsed;
   
   Client.create({
     first_name : req.body.firstName,
@@ -45,6 +46,10 @@ module.exports.addClientForm = (req,res,next)=> {
 
   })
     .then(()=>{
+      substances.forEach((data)=>{
+        console.log('data subs', data);
+        
+      })
       res.status(201).end(); // 201 = new resource created
     })
   .catch(err => {
