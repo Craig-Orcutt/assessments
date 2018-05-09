@@ -105,7 +105,7 @@ class Form extends React.Component {
     resolve(points);
   })
   }
-
+// 
   totalPoints = () => {
     return new Promise((resolve,reject)=> {
       this.fieldCheck(this.state.previousSubstance); 
