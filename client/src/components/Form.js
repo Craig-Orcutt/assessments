@@ -26,6 +26,7 @@ class Form extends React.Component {
     this.setState({
       [e.target.name]: e.target.value
     });
+    // 
     this.addUpSubstances(this.state.substancesUsed); 
   };
   // setting state of checkbox group
@@ -84,6 +85,7 @@ class Form extends React.Component {
   }
 
   useLengthMultiply = (points) => {
+    return new Promise((resolve,reject)=>{
     let use = this.state.useLength
     if (use === '0-3months'){
       points = points * 1
@@ -99,7 +101,9 @@ class Form extends React.Component {
       console.log('no length of use identified');
     }
     console.log('lengthtttt', points);
-    this.state.points = points
+
+    resolve(points);
+  })
   }
 
   totalPoints = () => {
@@ -107,7 +111,7 @@ class Form extends React.Component {
       this.fieldCheck(this.state.previousSubstance); 
       this.fieldCheck(this.state.si_hi);
 
-      console.log('PROMISE points',this.state.points );
+      console.log('PROMISE points',this.state );
       resolve(this.state.points)
     })
   }
@@ -116,15 +120,17 @@ class Form extends React.Component {
   onSubmit = e => {
     e.preventDefault();
     console.log("this", this.state);
-    // this.fieldCheck(this.state.previousSubstance); 
-    // this.fieldCheck(this.state.si_hi); 
     this.totalPoints()
-    .then((pointsaddedUp)=>{
-      console.log('data after promise', pointsaddedUp);
-      this.useLengthMultiply(pointsaddedUp)
+    .then((pointsAddedUp)=>{
+      return this.useLengthMultiply(pointsAddedUp)
     })
-    console.log('this.state.treatment', this.state.points);
-    // this.sendForm(this.state)
+    .then((data)=>{
+      this.setState({
+        points: data
+      })
+      console.log('this.state.treatment', this.state);
+      return this.sendForm(this.state)
+    })
   };
 
   sendForm = (client) => {

@@ -42,7 +42,8 @@ module.exports.addClientForm = (req,res,next)=> {
     previous_treatment: req.body.previousSubstance,
     mental_health: req.body.previousMentalHealth,
     si_hi: req.body.si_hi,
-    severity: req.body.points
+    severity: req.body.points,
+    user_id: req.body.userid
 
   })
     .then(()=>{
