@@ -4,6 +4,8 @@ module.exports.getSubstances = (req, res, next) => {
   let {Substance} = req.app.get("models");
   Substance.findAll({raw:true})
   .then((data)=>{
+    console.log('user', req.app.get(currentUser));
+    
     res.status(200).json(data);
   })
   .catch(err=>{
@@ -11,23 +13,26 @@ module.exports.getSubstances = (req, res, next) => {
   })
 }
 
-module.exports.addClientSubstance = (req,res,next)=> {
-  let { client_substance} = req.app.get('models');
-    client_substance.create({ 
-      ClientId: req.body.clientId, 
-      SubstanceId })
-      .then(() => {
-        res.status(201).end(); // 201 = new resource created
-      })
-      .catch(err => {
-        next(err);
-      });
-}
+// module.exports.addClientSubstance = (req,res,next)=> {
+//   let { client_substance} = req.app.get('models');
+//     client_substance.create({ 
+//       ClientId: req.body.clientId, 
+//       SubstanceId })
+//       .then(() => {
+//         res.status(201).end(); // 201 = new resource created
+//       })
+//       .catch(err => {
+//         next(err);
+//       });
+// }
 
 module.exports.addClientForm = (req,res,next)=> {
   let { Client , client_substance} = req.app.get('models');
+  console.log('req.body', req.body);
+  let substances = req.body.substancesUsed;
+  
   Client.create({
-    first_name : req.body.first_name,
+    first_name : req.body.firstName,
     last_name: req.body.lastName,
     dob: req.body.age,
     gender: req.body.gender,
@@ -36,10 +41,15 @@ module.exports.addClientForm = (req,res,next)=> {
     length_of_use: req.body.useLength,
     previous_treatment: req.body.previousSubstance,
     mental_health: req.body.previousMentalHealth,
-    si_hi: req.body.si_hi
+    si_hi: req.body.si_hi,
+    severity: req.body.points
 
   })
     .then(()=>{
+      substances.forEach((data)=>{
+        console.log('data subs', data);
+        
+      })
       res.status(201).end(); // 201 = new resource created
     })
   .catch(err => {

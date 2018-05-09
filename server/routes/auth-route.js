@@ -17,7 +17,7 @@ router.get("/status", (req, res) => {
     console.log("not authed in get status route");
     return res.status(200).send(null);
   }
-  res.status(200).json({ username: req.user.username, id: req.user.id });
+  res.status(200).json({ username: req.user.username, id: req.user.id, isOutreach: user.isOutreach  });
 });
 
 module.exports = router;

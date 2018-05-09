@@ -1,12 +1,18 @@
+
 import React, { Component } from 'react';
+
 import './App.css';
 import Login from './Login';
+import Form from './Form';
+import Outreach from './Outreach';
 
 class App extends Component {
   state = {
     username: '',
     userid: '',
-    userIsOutreach: false
+    userIsOutreach: false,
+    isHiddenForm : true,
+    isHiddenOutreach: true
   };
 
 //  
@@ -17,14 +23,30 @@ setUser = (user) => {
     userid: user.id,
     userIsOutreach: user.isOutreach
   })
-  console.log('hellooooo from setUser', this.state);
+  if(this.state.userIsOutreach === false){
+    this.setState({
+      isHiddenForm: !this.state.isHiddenForm
+    })
+  } else if (this.state.userIsOutreach === true) {
+    this.setState({
+      isHiddenOutreach: !this.state.isHiddenOutreach
+    })
+  } else {
+    this.setState({
+      isHiddenForm: true,
+      isHiddenOutreach: true
+    })
+  }
   
 }
 
   render() {
+    
     return (
       <div className="App">
-        <Login setUser={this.setUser}/>
+        <Login setUser={this.setUser} history={this.history}/>
+        {!this.state.isHiddenForm && <Form setUser={this.state.userid} />}
+        {!this.state.isHiddenOutreach && <Outreach />}
       </div>
     );
   }
