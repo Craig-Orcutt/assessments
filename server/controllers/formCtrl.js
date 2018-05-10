@@ -36,7 +36,7 @@ module.exports.addClientForm = (req,res,next)=> {
     dob: req.body.age,
     gender: req.body.gender,
     frequency: req.body.frequency,
-    last_use: req.body.last_use,
+    last_use: req.body.lastUse,
     length_of_use: req.body.useLength,
     previous_treatment: req.body.previousSubstance,
     mental_health: req.body.previousMentalHealth,

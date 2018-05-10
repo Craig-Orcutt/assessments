@@ -88,15 +88,15 @@ class Form extends React.Component {
   useLengthMultiply = (points) => {
     return new Promise((resolve,reject)=>{
     let use = this.state.useLength
-    if (use === '0-3months'){
+    if (use === '0-3 months'){
       points = points * 1
-    } else if(use === '3-6months'){
+    } else if(use === '3-6 months'){
       points = points * 2
-    } else if(use === '6-12months'){
+    } else if(use === '6-12 months'){
       points = points * 3
-    } else if(use ==='1-5years'){
+    } else if(use ==='1-5 years'){
       points = points * 4
-    } else if(use === '5Upyears'){
+    } else if(use === 'More than 5 years'){
       points = points * 5
     } else {
       console.log('no length of use identified');
@@ -201,11 +201,11 @@ class Form extends React.Component {
           <label>Length of Use</label>
           <select name="useLength"  value={this.state.useLength} onChange={e => this.change(e)}>
           <option name="null" >Select</option>
-          <option value="0-3months" >0 - 3 Months</option>
-          <option value="3-6months">3 - 6 Months</option>
-          <option value="6-12months" >6 - 12 Months</option>
-          <option value="1-5years" >1 - 5 years</option>
-          <option value="5Upyears" > > 5 years</option>
+          <option value="0-3 months" >0 - 3 Months</option>
+          <option value="3-6 months">3 - 6 Months</option>
+          <option value="6-12 months" >6 - 12 Months</option>
+          <option value="1-5 years" >1 - 5 years</option>
+          <option value="More than 5 years" > > 5 years</option>
           </select>
           <br/>
           <label>Latest Use</label>
