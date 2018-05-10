@@ -1,20 +1,28 @@
 import React from 'react';
 import axios from 'axios'
+import Client from './Client'
 
 class Outreach extends React.Component{
   url = "http://localhost:5000";
-
+  state = {
+    clients : []
+  }
   componentDidMount = () => {
     axios.get(`${this.url}/server/outreach`)
     .then((data)=>{
-      console.log('data', data);
-      
+      this.setState({
+        clients: data.data
+      })
     })
   }
   render(){
-    console.log('hello from outreach' );
+    const clients = this.state.clients.map((client, index)=>{
+      return (
+          <Client key={index} text={client.first_name} />
+      )
+    })
     return(
-      <h1>HELLLLOOOOOOOOOO OUTTREACCCCHHHHHHHHH</h1>
+      <div className="clients">{clients}</div>
     )
   }
 }
