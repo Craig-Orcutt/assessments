@@ -2,20 +2,44 @@
   "substances":
   [
     {
-      "name": "alcohol",
-      "points": 2
-    },
-    {
       "name": "marijuana",
-      "points": 1
+      "points": 0.5
     },
     {
-      "name": "benzodiazepines",
-      "points": 2
+      "name": "alcohol",
+      "points": 3
     },
     {
       "name": "heroin",
+      "points": 2.5
+    },
+    {
+      "name": "prescription opiates",
       "points": 2
+    },
+    {
+      "name": "benzodiazepines",
+      "points": 3
+    },
+    {
+      "name": "cocaine",
+      "points": 1.5
+    },
+    {
+      "name": "crack cocaine",
+      "points": 2
+    },
+    {
+      "name": "methamphetamines",
+      "points": 2
+    },
+    {
+      "name": "amphetamines",
+      "points": 1.5
+    },
+    {
+      "name": "hallucinogens",
+      "points": 0.5
     }
   ]
 }

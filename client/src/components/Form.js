@@ -18,20 +18,16 @@ class Form extends React.Component {
     // state of hide/show for text area based on click
     showing : false,
     userid : this.props.setUser,
-    points: null
+    points: 0
   }
-  substances = this.state.substancesUsed;
-  componentDidMount = () => {
-    
-    
-  }
+
 // sets state of changes made to strings in form
   change = e => {
-    // this.props.onChange({ [e.target.name]: e.target.value });
     this.setState({
       [e.target.name]: e.target.value
     });
-    this.addUpSubstances(this.state.substances)
+    // 
+    this.addUpSubstances(this.state.substancesUsed); 
   };
   // setting state of checkbox group
   substancesChecked = (newSubs) => {
@@ -39,47 +35,40 @@ class Form extends React.Component {
       substancesUsed: newSubs
     })
   }
-  useFrequency = (frequecy) => {
-    this.setState({
-      frequency: frequecy
-    })
-
-  }
-
+  
   addUpSubstances = (subs) => {
-    let substances = this.state.substancesUsed;
     let points = 0;
-    substances.forEach((data)=> {
+    subs.forEach((data)=> {
       switch(data) {
-        case 'marijuana' :
-          points += 0.5;
+        case '1' :
+        points += 0.5;
           break;
-        case "alcohol" :
-          points +=3
+        case "2" :
+        points +=3
           break;
-        case "heroin" :
-          points +=2.5
+        case "3" :
+        points +=2.5
           break;
-        case "opiates" :
-          points +=2
+        case "4" :
+        points +=2
           break;
-        case "benzodiazepines" :
-          points +=3
+        case "5" :
+        points +=3
           break;
-        case "cocaine" :
-          points +=1.5
+        case "6" :
+        points +=1.5
           break;
-        case "crack" :
-          points +=2
+        case "7" :
+        points +=2
           break;
-        case "methamphetamine" :
-          points +=2
+        case "8" :
+        points +=2
           break;
-        case "amphetamines" :
-          points +=1.5
+        case "9" :
+        points +=1.5
           break;
-        case "hallucinogens" :
-          points +=0.5
+        case "10" :
+        points +=0.5
           break;
         default :
           console.log('No substances selected');
@@ -88,13 +77,58 @@ class Form extends React.Component {
     this.setState({
       points: points
     })
-    console.log('POINTS ON SUBS', points);
+  }
+  fieldCheck = (stateCheck) => {
+    if(stateCheck !== ""){
+      this.state.points +=1 
+    } 
   }
 
+  useLengthMultiply = (points) => {
+    return new Promise((resolve,reject)=>{
+    let use = this.state.useLength
+    if (use === '0-3months'){
+      points = points * 1
+    } else if(use === '3-6months'){
+      points = points * 2
+    } else if(use === '6-12months'){
+      points = points * 3
+    } else if(use ==='1-5years'){
+      points = points * 4
+    } else if(use === '5Upyears'){
+      points = points * 5
+    } else {
+      console.log('no length of use identified');
+    }
+    resolve(points);
+  })
+  }
+// promise for checking for non empty fields and then adding points to state
+  totalPoints = () => {
+    return new Promise((resolve,reject)=> {
+      this.fieldCheck(this.state.previousSubstance); 
+      this.fieldCheck(this.state.si_hi);
+      resolve(this.state.points)
+    })
+  }
+
+  
   onSubmit = e => {
     e.preventDefault();
-    console.log("this", this.state);   
-    this.sendForm(this.state)
+    // checks to see if previous treatment and si_hi are null, if not, points are added to the total
+    this.totalPoints()
+    .then((pointsAddedUp)=>{
+      // takes the total points and multiplies them base on length of substance abuse
+      return this.useLengthMultiply(pointsAddedUp)
+    })
+    .then((data)=>{
+      // sets the multiplied points to state
+      this.setState({
+        points: data
+      })
+      // sends off the state obj to back end for processing
+      return this.sendForm(this.state)
+    })
   };
 
   sendForm = (client) => {
@@ -129,6 +163,7 @@ class Form extends React.Component {
           <br/>
           <label htmlFor="gender">Gender</label>
           <select name="gender"  value={this.state.gender} onChange={e => this.change(e)}>
+          <option name="null" >Select</option>
           <option name="male" >Male</option>
           <option name="female">Other</option>
           <option name="other" >Female</option>
@@ -138,31 +173,23 @@ class Form extends React.Component {
           <CheckboxGroup 
           name="substancesUsed"
           value={this.state.substancesUsed} 
-          onChange={this.substancesChecked}>
-          <label>Marijuana</label>
-          <Checkbox value="marijuana" />
-          <label>Alcohol</label>
-          <Checkbox value="alcohol" />
-          <label>Heroin</label>
-          <Checkbox value="heroin"/>
-          <label>Prescription Opiates</label>
-          <Checkbox value="opiates"/>
-          <label>Benzodiazepines</label>
-          <Checkbox value="benzodiazepines"/>
-          <label>Cocaine</label>
-          <Checkbox value="cocaine"/>
-          <label>Crack Cocaine</label>
-          <Checkbox value="crack"/>
-          <label>Methamphetamine</label>
-          <Checkbox value="methamphetamine"/>
-          <label>Amphetamines</label>
-          <Checkbox value="amphetamines"/>
-          <label>Hallucinogens</label>
-          <Checkbox value="hallucinogens"/>
+          onChange={this.substancesChecked}
+          checkboxDepth={2}>
+          <label><Checkbox value="1" />Marijuana</label>
+          <label><Checkbox value="2" />Alcohol</label>
+          <label><Checkbox value="3"/>Heroin</label>
+          <label><Checkbox value="4"/>Prescription Opiates</label>
+          <label><Checkbox value="5"/>Benzodiazepines</label>
+          <label><Checkbox value="6"/>Cocaine</label>
+          <label><Checkbox value="7"/>Crack Cocaine</label>
+          <label><Checkbox value="8"/>Methamphetamine</label>
+          <label><Checkbox value="9"/>Amphetamines</label>
+          <label><Checkbox value="10"/>Hallucinogens</label>
           </CheckboxGroup>
           <br/>
           <label>Frequency of Use</label>
           <select name="frequency"  value={this.state.frequency} onChange={e => this.change(e)}>
+          <option name="null" >Select</option>
           <option name="daily" >Daily</option>
           <option name="monthly">Monthly</option>
           <option name="yearly" >Yearly</option>
@@ -172,11 +199,12 @@ class Form extends React.Component {
           <br/>
           <label>Length of Use</label>
           <select name="useLength"  value={this.state.useLength} onChange={e => this.change(e)}>
-          <option name="0months" >0 - 3 Months</option>
-          <option name="3months">3 - 6 Months</option>
-          <option name="6months" >6 - 12 Months</option>
-          <option name="1years" >1 - 5 years</option>
-          <option name="5years" > > 5 years</option>
+          <option name="null" >Select</option>
+          <option value="0-3months" >0 - 3 Months</option>
+          <option value="3-6months">3 - 6 Months</option>
+          <option value="6-12months" >6 - 12 Months</option>
+          <option value="1-5years" >1 - 5 years</option>
+          <option value="5Upyears" > > 5 years</option>
           </select>
           <br/>
           <label>Latest Use</label>

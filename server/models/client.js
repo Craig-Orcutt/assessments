@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       as: "therapist"
     });
     Client.belongsToMany(models.Substance, {
+      as: "substanceList",
       through: 'client_substance'
     })
   };

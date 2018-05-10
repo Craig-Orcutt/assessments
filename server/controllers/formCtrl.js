@@ -27,10 +27,9 @@ module.exports.getSubstances = (req, res, next) => {
 // }
 
 module.exports.addClientForm = (req,res,next)=> {
-  let { Client , client_substance} = req.app.get('models');
+  let { Client } = req.app.get('models');
   console.log('req.body', req.body);
-  let substances = req.body.substancesUsed;
-  
+  let substance = req.body.substancesUsed
   Client.create({
     first_name : req.body.firstName,
     last_name: req.body.lastName,
@@ -42,15 +41,24 @@ module.exports.addClientForm = (req,res,next)=> {
     previous_treatment: req.body.previousSubstance,
     mental_health: req.body.previousMentalHealth,
     si_hi: req.body.si_hi,
-    severity: req.body.points
+    severity: req.body.points,
+    therapist: req.body.userid
 
   })
-    .then(()=>{
-      substances.forEach((data)=>{
-        console.log('data subs', data);
+    .then((data)=>{
+      console.log('data', data.dataValues.id);
+      Client.findById(data.dataValues.id)
+      .then((foundClient) => {
+        substance.forEach((sub)=> {
+          foundClient.addsubstanceList(sub)
+          .then((newRecord) => {
+            res.status(201).json(newRecord);
+            })
+        })
         
       })
-      res.status(201).end(); // 201 = new resource created
+      // GET THE CLIENT ID THAT WAS JUST CREATED TO ADD TO JOIN TABLE
+      // res.status(201).end(); // 201 = new resource created
     })
   .catch(err => {
     next(err);
@@ -62,10 +70,10 @@ module.exports.addClientForm = (req,res,next)=> {
 //   let {Client} = req.app.get("models");
 //   Client.findById(client_id)
 //   .then(foundClient => {
-//       foundClient.addsubstanceList(SubstanceId)
-//           .then((newRecord) => {
-//   res.status(201).json(newRecord);
-//           })
+      // foundClient.addsubstanceList(SubstanceId)
+  //         .then((newRecord) => {
+  // res.status(201).json(newRecord);
+  //         })
 //         })
 // }
 
