@@ -36,26 +36,23 @@ module.exports.addClientForm = (req,res,next)=> {
     dob: req.body.age,
     gender: req.body.gender,
     frequency: req.body.frequency,
-    last_use: req.body.last_use,
+    last_use: req.body.lastUse,
     length_of_use: req.body.useLength,
     previous_treatment: req.body.previousSubstance,
     mental_health: req.body.previousMentalHealth,
     si_hi: req.body.si_hi,
     severity: req.body.points,
-    therapist: req.body.userid
+    therapist_id: req.body.userid
 
   })
     .then((data)=>{
       console.log('data', data.dataValues.id);
       Client.findById(data.dataValues.id)
-      .then((foundClient) => {
-        substance.forEach((sub)=> {
-          foundClient.addsubstanceList(sub)
+      .then((foundClient) => {      
+          foundClient.addSubstances(substance)
           .then((newRecord) => {
             res.status(201).json(newRecord);
             })
-        })
-        
       })
       // GET THE CLIENT ID THAT WAS JUST CREATED TO ADD TO JOIN TABLE
       // res.status(201).end(); // 201 = new resource created
