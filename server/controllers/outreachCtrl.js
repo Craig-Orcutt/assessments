@@ -1,6 +1,11 @@
 'use strict';
 
-module.exports.getAllClients = () => {
-  console.log('getting all the clients', );
+module.exports.getAllClients = (req,res,next) => {
+  let {Client} = req.app.get('models');
+  Client.findAll({raw:true})
+  .then((data)=>{
+    
+    res.status(200).json(data);
+  })
   
 }
