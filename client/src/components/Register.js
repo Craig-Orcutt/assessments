@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
 
+
 class Register extends React.Component {
   url= "http://localhost:5000";
   state = {
@@ -35,7 +36,7 @@ class Register extends React.Component {
         <form>
           <label>Email</label>
           <input name="email" value={this.state.email} type="text" onChange={e => this.change(e)}/>
-          <label>Username</label>
+          <label>Name</label>
           <input name="username" value={this.state.username} type="text" onChange={e => this.change(e)}/>
           <label>Password</label>
           <input type="password" />
@@ -43,7 +44,7 @@ class Register extends React.Component {
           <input name="password" value={this.state.password} type="password" onChange={e => this.change(e)} />
           <label>Outreach?</label>
           <input type="checkbox" name='isOutreach' value={this.state.isOutreach} onClick={() => {this.setState({isOutreach: !this.state.isOutreach})}}/>
-          <button onClick={e => this.onSubmit(e)}>Register</button>
+          <button type='button' onClick={(e) => {this.onSubmit(e);this.props.history.replace('/')}}>Register</button>
         </form>
       </div>
     );
