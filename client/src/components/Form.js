@@ -40,6 +40,7 @@ class Form extends React.Component {
     let points = 0;
     subs.forEach((data)=> {
       switch(data) {
+        
         case '1' :
         points += 0.5;
           break;
