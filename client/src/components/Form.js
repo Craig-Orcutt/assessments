@@ -100,18 +100,14 @@ class Form extends React.Component {
     } else {
       console.log('no length of use identified');
     }
-    console.log('lengthtttt', points);
-
     resolve(points);
   })
   }
-// 
+// promise for checking for non empty fields and then adding points to state
   totalPoints = () => {
     return new Promise((resolve,reject)=> {
       this.fieldCheck(this.state.previousSubstance); 
       this.fieldCheck(this.state.si_hi);
-
-      console.log('PROMISE points',this.state );
       resolve(this.state.points)
     })
   }
@@ -119,16 +115,18 @@ class Form extends React.Component {
   
   onSubmit = e => {
     e.preventDefault();
-    console.log("this", this.state);
+    // checks to see if previous treatment and si_hi are null, if not, points are added to the total
     this.totalPoints()
     .then((pointsAddedUp)=>{
+      // takes the total points and multiplies them base on length of substance abuse
       return this.useLengthMultiply(pointsAddedUp)
     })
     .then((data)=>{
+      // sets the multiplied points to state
       this.setState({
         points: data
       })
-      console.log('this.state.treatment', this.state);
+      // sends off the state obj to back end for processing
       return this.sendForm(this.state)
     })
   };
