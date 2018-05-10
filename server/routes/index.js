@@ -5,4 +5,5 @@ const router = Router();
 
 router.use(require("./auth-route"));
 router.use(require("./form"));
+router.use(require("./outreach"));
 module.exports = router;

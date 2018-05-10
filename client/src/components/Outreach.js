@@ -1,9 +1,15 @@
 import React from 'react';
+import axios from 'axios'
 
 class Outreach extends React.Component{
+  url = "http://localhost:5000";
+
   componentDidMount = () => {
-    console.log('hello is this mounted', );
-    
+    axios.get(`${this.url}/server/outreach`)
+    .then((data)=>{
+      console.log('data', data);
+      
+    })
   }
   render(){
     console.log('hello from outreach' );
