@@ -17,12 +17,11 @@ module.exports = (sequelize, DataTypes) => {
   Client.associate = function(models) {
     // associations can be defined here
     Client.belongsTo(models.User, {
-      foreignKey: "user_id",
+      foreignKey: "therapist_id",
       as: "therapist"
     });
     Client.belongsToMany(models.Substance, {
-      as: "substanceList",
-      through: 'client_substance'
+      through: 'clientSubstance'
     })
   };
   return Client;
