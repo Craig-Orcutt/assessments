@@ -26,6 +26,7 @@ class Outreach extends React.Component{
             lastName={client.last_name}
             age={client.dob}
             gender={client.gender}
+            substancesUsed={client.substancesUsed}
             frequency={client.frequency}
             useLength={client.length_of_use}
             lastUse={client.last_use}
