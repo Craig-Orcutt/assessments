@@ -15,7 +15,7 @@ class Form extends React.Component {
     substancesUsed: [],
     frequency: '',
     useLength: '',
-    lastUse: '',
+    lastUse: {},
     previousSubstance: '',
     previousMentalHealth: '',
     si_hi: '',
@@ -180,7 +180,7 @@ class Form extends React.Component {
 
           <br/>
           <SelectField floatingLabelText='Gender' name="gender" value={this.state.gender} onChange={this.handleGenderChange}>
-          <MenuItem value='Gender' primaryText='Gender' />
+          <MenuItem value='null' primaryText='' />
           <MenuItem value='Male' primaryText='Male'/>
           <MenuItem value='Female' primaryText='Female' />
           <MenuItem value='Other' primaryText ='Other' />
@@ -221,8 +221,8 @@ class Form extends React.Component {
           <MenuItem value="More than 5 years" primaryText="More than 5 years"/> 
           </SelectField>
           <br/>
-          <label>Latest Use</label>
-          <DatePicker value={this.state.lastUse} onChange={this.handleDateChange}/>
+
+          <DatePicker floatingLabelText="Latest Use" value={this.state.lastUse} onChange={this.handleDateChange}/>
           <br/>
           <label>Previous Substance Abuse Treament</label>
           <CheckboxGroup name="previouseSubstance">
@@ -239,7 +239,7 @@ class Form extends React.Component {
             <label>No</label>
             <Checkbox value={"no"} />
           </CheckboxGroup>
-          <label>Previouse Mental Health Diagnosis</label>
+          <label>Previous Mental Health Diagnosis</label>
           <CheckboxGroup name="previouseMentalHealth">
             <label>Yes</label>
             <Checkbox onClick={() => this.setState({ showing: !showing })} />
