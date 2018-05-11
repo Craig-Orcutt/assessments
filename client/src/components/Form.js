@@ -1,8 +1,12 @@
 import React from 'react';
 import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
-import axios from 'axios'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {TextField, SelectField, MenuItem, DatePicker } from 'material-ui';
+import axios from 'axios';
 
 class Form extends React.Component {
+
+
   state = {
     firstName: "",
     lastName: "",
@@ -18,9 +22,14 @@ class Form extends React.Component {
     // state of hide/show for text area based on click
     showing : false,
     userid : this.props.setUser,
-    points: 0
-  }
+    points: 0,
 
+
+  }
+  handleGenderChange = (event, index, gender) => this.setState({gender});
+  handleFrequencyChange = (event, index, frequency) => this.setState({frequency});
+  handleUseLengthChange = (event, index, useLength) => this.setState({useLength});
+  handleDateChange = (event, date) => this.setState({lastUse: date});
 // sets state of changes made to strings in form
   change = e => {
     this.setState({
@@ -28,7 +37,10 @@ class Form extends React.Component {
     });
     // 
     this.addUpSubstances(this.state.substancesUsed); 
+    console.log('this.state', this.state);
+    
   };
+  
   // setting state of checkbox group
   substancesChecked = (newSubs) => {
     this.setState({
@@ -142,33 +154,37 @@ class Form extends React.Component {
     // sets state of showing or hiding the text area
     const { showing } = this.state;
     return (
-      <form>
-          <label htmlFor="firstName">Client's First Name</label>
-          <input 
+      <MuiThemeProvider>
+        <div>
+          <TextField 
           name="firstName" 
-          placeholder="First Name"
+          floatingLabelText='First Name'
           value={this.state.firstName}
           onChange={e => this.change(e)}/>
           <br/>
-          <label htmlFor="lastName">Client's Last Name</label>
-          <input 
+          <TextField 
             name="lastName"
-            placeholder="Last Name"
+            floatingLabelText='Last Name'
             value={this.state.lastName}
             onChange={e => this.change(e)} 
             />
           
           <br/>
-          <label>Age</label>
-          <input type="text" name="age" value={this.state.age} onChange={e=> this.change(e)}/>
+
+          <TextField 
+            floatingLabelText='Age'
+            name="age" 
+            value={this.state.age} 
+            onChange={e=> this.change(e)}/>
           <br/>
-          <label htmlFor="gender">Gender</label>
-          <select name="gender"  value={this.state.gender} onChange={e => this.change(e)}>
-          <option name="null" >Select</option>
-          <option name="male" >Male</option>
-          <option name="female">Other</option>
-          <option name="other" >Female</option>
-          </select>
+
+          <br/>
+          <SelectField floatingLabelText='Gender' name="gender" value={this.state.gender} onChange={this.handleGenderChange}>
+          <MenuItem value='Gender' primaryText='Gender' />
+          <MenuItem value='Male' primaryText='Male'/>
+          <MenuItem value='Female' primaryText='Female' />
+          <MenuItem value='Other' primaryText ='Other' />
+          </SelectField>
           <br/>
           <label>Substances Used</label>
           <CheckboxGroup 
@@ -188,28 +204,25 @@ class Form extends React.Component {
           <label><Checkbox value="10"/>Hallucinogens</label>
           </CheckboxGroup>
           <br/>
-          <label>Frequency of Use</label>
-          <select name="frequency"  value={this.state.frequency} onChange={e => this.change(e)}>
-          <option name="null" >Select</option>
-          <option name="daily" >Daily</option>
-          <option name="monthly">Monthly</option>
-          <option name="yearly" >Yearly</option>
-          <option name="occasionally" >Occasionally</option>
-          </select>
+          <SelectField floatingLabelText= 'Frequency Of Use' value={this.state.frequency} onChange={this.handleFrequencyChange}>
+          <MenuItem value="daily" primaryText="Daily"/>
+          <MenuItem value="monthly" primaryText="Monthly"/>
+          <MenuItem value="yearly" primaryText="Yearly"/>
+          <MenuItem value="occasionally" primaryText="Occasionally"/>
+          </SelectField>
           <br/>
           <br/>
-          <label>Length of Use</label>
-          <select name="useLength"  value={this.state.useLength} onChange={e => this.change(e)}>
-          <option name="null" >Select</option>
-          <option value="0-3 months" >0 - 3 Months</option>
-          <option value="3-6 months">3 - 6 Months</option>
-          <option value="6-12 months" >6 - 12 Months</option>
-          <option value="1-5 years" >1 - 5 years</option>
-          <option value="More than 5 years" > > 5 years</option>
-          </select>
+
+          <SelectField floatingLabelText= 'Length Of Use' value={this.state.useLength} onChange={this.handleUseLengthChange}>
+          <MenuItem value="0-3 months" primaryText="0-3 months"/>
+          <MenuItem value="3-6 months" primaryText="3-6 months"/>
+          <MenuItem value="6-12 months" primaryText= "6-12 months"/>
+          <MenuItem value="1-5 years" primaryText="1-5 years"/>
+          <MenuItem value="More than 5 years" primaryText="More than 5 years"/> 
+          </SelectField>
           <br/>
           <label>Latest Use</label>
-          <input type="text" name="lastUse" value={this.state.lastUse} onChange={e => this.change(e)}/>
+          <DatePicker value={this.state.lastUse} onChange={this.handleDateChange}/>
           <br/>
           <label>Previous Substance Abuse Treament</label>
           <CheckboxGroup name="previouseSubstance">
@@ -258,7 +271,8 @@ class Form extends React.Component {
           </CheckboxGroup>
 
           <button onClick={e => this.onSubmit(e)}>Subbbmit</button>
-      </form>
+          </div>
+      </MuiThemeProvider>
     );
   }
 }

@@ -4,7 +4,7 @@ class Client extends React.Component {
   render() {
     return(
       <div id={this.props.id} className="clientCard">
-        <h1 >Name : {this.props.firstName} {this.props.lastName}</h1>
+        <p >{this.props.firstName} {this.props.lastName}</p>
         <p> Age : {this.props.age}</p>
         <p>Gender : {this.props.gender}</p>
         <p>Frequency of Use : {this.props.frequency}</p>
