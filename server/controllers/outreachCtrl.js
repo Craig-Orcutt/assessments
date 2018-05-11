@@ -23,12 +23,7 @@ module.exports.getAllClients = (req,res,next) => {
           progress: client.progress,
           severity: client.severity,
           substancesUsed: client.Substances.map(subs => {
-            Object.assign(
-              {},
-              {
-                substance: client.Substances.name
-              }
-            )
+              return subs.name
           }),
           therapist: client.therapist.username
         }
