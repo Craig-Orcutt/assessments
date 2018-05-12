@@ -4,6 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {TextField, SelectField, MenuItem, DatePicker } from 'material-ui';
 import moment from 'moment'
 import axios from 'axios';
+import Name from './FormComponents/NameAgeGender'
 
 class Form extends React.Component {
 
@@ -157,28 +158,7 @@ class Form extends React.Component {
     return (
       <MuiThemeProvider>
         <div>
-          <TextField 
-          name="firstName" 
-          floatingLabelText='First Name'
-          value={this.state.firstName}
-          onChange={e => this.change(e)}/>
-          <br/>
-          <TextField 
-            name="lastName"
-            floatingLabelText='Last Name'
-            value={this.state.lastName}
-            onChange={e => this.change(e)} 
-            />
-          
-          <br/>
-
-          <TextField 
-            floatingLabelText='Age'
-            name="age" 
-            value={this.state.age} 
-            onChange={e=> this.change(e)}/>
-          <br/>
-
+          <Name change={this.change} />
           <br/>
           <SelectField floatingLabelText='Gender' name="gender" value={this.state.gender} onChange={this.handleGenderChange}>
           <MenuItem value='null' primaryText='' />
