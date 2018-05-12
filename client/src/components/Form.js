@@ -2,6 +2,7 @@ import React from 'react';
 import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {TextField, SelectField, MenuItem, DatePicker } from 'material-ui';
+import moment from 'moment'
 import axios from 'axios';
 
 class Form extends React.Component {
@@ -222,7 +223,7 @@ class Form extends React.Component {
           </SelectField>
           <br/>
 
-          <DatePicker floatingLabelText="Latest Use" value={this.state.lastUse} onChange={this.handleDateChange}/>
+          <DatePicker formatDate={(date)=>moment(date).format('MM/DD/YYYY')} floatingLabelText="Latest Use" value={this.state.lastUse} onChange={this.handleDateChange}/>
           <br/>
           <label>Previous Substance Abuse Treament</label>
           <CheckboxGroup name="previouseSubstance">
