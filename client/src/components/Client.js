@@ -13,10 +13,7 @@ class Client extends React.Component {
         <p> Age : {this.props.age}</p>
         <p>Gender : {this.props.gender}</p>
         <p>Frequency of Use : {this.props.frequency}</p>
-        <p>Substances Used : {this.props.substancesUsed.join(', ')
-          // subs = ` ${subs.charAt(0).toUpperCase() + subs.slice(1)}, `
-          //   return subs.substring(0, subs.length - 1)
-     }</p>
+        <p>Substances Used : {this.props.substancesUsed.join(', ')}</p>
         <p>Length of Use : {this.props.useLength}</p>
         <p>Last Time Client Used : {this.props.lastUse}</p>
         <p>Previous Substance Abuse Treatment : {this.props.previousSubstance}</p>

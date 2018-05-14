@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios'
 import Client from './Client'
+import moment from 'moment'
 import "./Outreach.css"
 
 class Outreach extends React.Component{
@@ -11,7 +12,7 @@ class Outreach extends React.Component{
   componentDidMount = () => {
     axios.get(`${this.url}/server/outreach`)
     .then((data)=>{
-      console.log('data', data);
+      console.log('data', data.data[0].last_use.toLocaleString());
       
       this.setState({
         clients: data.data
@@ -30,7 +31,7 @@ class Outreach extends React.Component{
             substancesUsed={client.substancesUsed}
             frequency={client.frequency}
             useLength={client.length_of_use}
-            lastUse={client.last_use}
+            lastUse={moment(client.last_use).format('MM/DD/YYYY')}
             previousSubstance={client.previous_treatment}
             mentalHealth={client.mental_health}
             si_hi={client.si_hi}
