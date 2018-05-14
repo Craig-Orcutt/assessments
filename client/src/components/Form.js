@@ -1,10 +1,11 @@
 import React from 'react';
 import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {TextField, SelectField, MenuItem, DatePicker } from 'material-ui';
+import { TextField, Paper, SelectField, MenuItem, DatePicker } from 'material-ui';
 import moment from 'moment'
 import axios from 'axios';
 import Name from './FormComponents/NameAgeGender'
+import "./Form.css";
 
 class Form extends React.Component {
 
@@ -22,7 +23,9 @@ class Form extends React.Component {
     previousMentalHealth: '',
     si_hi: '',
     // state of hide/show for text area based on click
-    showing : false,
+    showingSI : false,
+    showingTreat : false,
+    showingMent : false,
     userid : this.props.setUser,
     points: 0,
 
@@ -154,38 +157,41 @@ class Form extends React.Component {
   }
   render(){
     // sets state of showing or hiding the text area
-    const { showing } = this.state;
+    const { showingSI, showingMental, showingTreat, } = this.state;
     return (
       <MuiThemeProvider>
+        <Paper className="formContainer">
         <div>
           <Name change={this.change} />
-          <br/>
-          <SelectField floatingLabelText='Gender' name="gender" value={this.state.gender} onChange={this.handleGenderChange}>
-          <MenuItem value='null' primaryText='' />
-          <MenuItem value='Male' primaryText='Male'/>
-          <MenuItem value='Female' primaryText='Female' />
-          <MenuItem value='Other' primaryText ='Other' />
-          </SelectField>
-          <br/>
-          <label>Substances Used</label>
-          <CheckboxGroup 
-          name="substancesUsed"
-          value={this.state.substancesUsed} 
-          onChange={this.substancesChecked}
-          checkboxDepth={2}>
-          <label><Checkbox value="1" />Marijuana</label>
-          <label><Checkbox value="2" />Alcohol</label>
-          <label><Checkbox value="3"/>Heroin</label>
-          <label><Checkbox value="4"/>Prescription Opiates</label>
-          <label><Checkbox value="5"/>Benzodiazepines</label>
-          <label><Checkbox value="6"/>Cocaine</label>
-          <label><Checkbox value="7"/>Crack Cocaine</label>
-          <label><Checkbox value="8"/>Methamphetamine</label>
-          <label><Checkbox value="9"/>Amphetamines</label>
-          <label><Checkbox value="10"/>Hallucinogens</label>
+          <SelectField fullWidth={true} floatingLabelText="Gender" onChange={this.handleGenderChange} value={this.state.gender}>
+          <MenuItem value='null' primaryText="" />
+          <MenuItem  value='Male' primaryText="Male" />
+          <MenuItem value="Female" primaryText="Female" />
+          <MenuItem value="Other" primaryText="Other" />
+        </SelectField>
+        <br/>
+        <br/>
+        <label className='subLabel'>Substances Used</label>
+        <CheckboxGroup 
+        className="checkboxContainer"
+        name="substancesUsed"
+        value={this.state.substancesUsed} 
+        onChange={this.substancesChecked}
+        checkboxDepth={2}>
+          <label className='checkLabel'><Checkbox className="regular-checkbox big-checkbox" value="1"/> Marijuana</label>
+          <label className='checkLabel'><Checkbox className="regular-checkbox big-checkbox" value="2" />Alcohol</label>
+          <label className='checkLabel'><Checkbox className="regular-checkbox big-checkbox" value="3"/>Heroin</label>
+          <label className='checkLabel'><Checkbox className="regular-checkbox big-checkbox" value="4"/>Prescription Opiates</label>
+          <label className='checkLabel'><Checkbox className="regular-checkbox big-checkbox" value="5"/>Benzodiazepines</label>
+          <label className='checkLabel'><Checkbox className="regular-checkbox big-checkbox" value="6"/>Cocaine</label>
+          <label className='checkLabel'><Checkbox className="regular-checkbox big-checkbox" value="7"/>Crack Cocaine</label>
+          <label className='checkLabel'><Checkbox className="regular-checkbox big-checkbox" value="8"/>Methamphetamine</label>
+          <label className='checkLabel'><Checkbox className="regular-checkbox big-checkbox" value="9"/>Amphetamines</label>
+          <label className='checkLabel'><Checkbox className="regular-checkbox big-checkbox" value="10"/>Hallucinogens</label>
           </CheckboxGroup>
           <br/>
-          <SelectField floatingLabelText= 'Frequency Of Use' value={this.state.frequency} onChange={this.handleFrequencyChange}>
+          <br/>
+          <SelectField fullWidth={true} floatingLabelText= 'Frequency Of Use' value={this.state.frequency} onChange={this.handleFrequencyChange}>
           <MenuItem value="daily" primaryText="Daily"/>
           <MenuItem value="monthly" primaryText="Monthly"/>
           <MenuItem value="yearly" primaryText="Yearly"/>
@@ -193,8 +199,7 @@ class Form extends React.Component {
           </SelectField>
           <br/>
           <br/>
-
-          <SelectField floatingLabelText= 'Length Of Use' value={this.state.useLength} onChange={this.handleUseLengthChange}>
+          <SelectField fullWidth={true} floatingLabelText= 'Length Of Use' value={this.state.useLength} onChange={this.handleUseLengthChange}>
           <MenuItem value="0-3 months" primaryText="0-3 months"/>
           <MenuItem value="3-6 months" primaryText="3-6 months"/>
           <MenuItem value="6-12 months" primaryText= "6-12 months"/>
@@ -202,57 +207,72 @@ class Form extends React.Component {
           <MenuItem value="More than 5 years" primaryText="More than 5 years"/> 
           </SelectField>
           <br/>
-
-          <DatePicker formatDate={(date)=>moment(date).format('MM/DD/YYYY')} floatingLabelText="Latest Use" value={this.state.lastUse} onChange={this.handleDateChange}/>
+          <br/>
+          <DatePicker fullWidth={true} formatDate={(date)=>moment(date).format('MM/DD/YYYY')} floatingLabelText="Latest Use" value={this.state.lastUse} onChange={this.handleDateChange}/>
+          <br/>
           <br/>
           <label>Previous Substance Abuse Treament</label>
-          <CheckboxGroup name="previouseSubstance">
-            <label>Yes</label>
-            <Checkbox onClick={() => this.setState({ showing: !this.state.showing })} />
-            <textarea
+          <CheckboxGroup checkboxDepth={2} className='textShow' name="previousSubstance">
+            <label><Checkbox className="regular-checkbox big-checkbox" onClick={() => this.setState({ showingTreat: !this.state.showingTreat })} />Yes</label>
+            <TextField
+              multiLine={true}
+              rows={2}
+              rowsMax={4}
+              fullWidth={true}
               name="previousSubstance"
               value={this.state.previousSubstance}
               onChange={e => this.change(e)}  
-              placeholder="Please Provide Further Information"
+              hintText="Please Provide Further Information"
               // setting style of hide/show based on whether yes has been clicked
-              style={{ display: showing ? "inline" : "none" }}
+              style={{ display: showingTreat ? "grid" : "none"}}
             />
-            <label>No</label>
-            <Checkbox value={"no"} />
+            <label>
+            <Checkbox className="regular-checkbox big-checkbox" value={"no"} />No</label>
+            <br/>
+            <br/>
           </CheckboxGroup>
           <label>Previous Mental Health Diagnosis</label>
-          <CheckboxGroup name="previouseMentalHealth">
-            <label>Yes</label>
-            <Checkbox onClick={() => this.setState({ showing: !showing })} />
-            <textarea
+          <CheckboxGroup checkboxDepth={2} name="previouseMentalHealth" className='textShow'>
+            <label>
+            <Checkbox className='regular-checkbox big-checkbox'  onClick={() => this.setState({ showingMental: !showingMental })} />Yes</label>
+            <TextField
+              multiLine={true}
+              rows={2}
+              rowsMax={4}
+              fullWidth={true}
               name="previousMentalHealth"
               value={this.state.previousMentalHealth}
               onChange={e => this.change(e)}  
-              placeholder="Please Provide Further Information"
+              hintText="Please Provide Further Information"
               // setting style of hide/show based on whether yes has been clicked
-              style={{ display: showing ? "inline" : "none" }}
+              style={{ display: showingMental ? "grid" : "none" }}
             />
-            <label>No</label>
-            <Checkbox value={"no"} />
+            <label>
+            <Checkbox className='regular-checkbox big-checkbox' value={"no"} />No</label>
+            <br/>
+            <br/>
           </CheckboxGroup>
           <label>Previous SI/HI?</label>
-          <CheckboxGroup name="si_hi">
-            <label>Yes</label>
-            <Checkbox onClick={() => this.setState({ showing: !showing })} />
-            <textarea
+          <CheckboxGroup checkboxDepth={2} className='textShow' name="si_hi">
+            <label><Checkbox className="regular-checkbox big-checkbox" onClick={() => this.setState({ showingSI: !showingSI })} />Yes</label>
+            <TextField
+              multiLine={true}
+              rows={2}
+              rowsMax={4}
+              fullWidth={true}
               name="si_hi"
               value={this.state.si_hi}
               onChange={e => this.change(e)}  
-              placeholder="Please Provide Further Information"
+              hintText="Please Provide Further Information"
               // setting style of hide/show based on whether yes has been clicked
-              style={{ display: showing ? "inline" : "none" }}
+              style={{ display: showingSI ? "grid" : "none" }}
             />
-            <label>No</label>
-            <Checkbox value={"no"} />
+            <label><Checkbox className="regular-checkbox big-checkbox" value={"no"} />No</label>
           </CheckboxGroup>
-
-          <button onClick={e => this.onSubmit(e)}>Subbbmit</button>
+          <br/>
+          <button onClick={e => this.onSubmit(e)}>Submit</button>
           </div>
+          </Paper>
       </MuiThemeProvider>
     );
   }
