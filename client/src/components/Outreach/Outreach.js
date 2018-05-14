@@ -12,9 +12,7 @@ class Outreach extends React.Component{
   }
   componentDidMount = () => {
     axios.get(`${this.url}/server/outreach`)
-    .then((data)=>{
-      console.log('data', data.data[0].last_use.toLocaleString());
-      
+    .then((data)=>{      
       this.setState({
         clients: data.data
       })
@@ -37,7 +35,9 @@ class Outreach extends React.Component{
             mentalHealth={client.mental_health}
             si_hi={client.si_hi}
             severity={client.severity}
-            therapist={client.therapist}/>
+            therapist={client.therapist}
+            inquiryDate={moment(client.inquiry).format("MM/DD/YYYY")}
+            />
       )
     })
     return(

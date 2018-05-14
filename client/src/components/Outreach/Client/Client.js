@@ -9,6 +9,7 @@ class Client extends React.Component {
       <MuiThemeProvider>
       <Paper className="clientContainer">
       <div id={this.props.id} className="clientCard">
+        <p>Date of Inquiry : {this.props.inquiryDate}</p>
         <p >{this.props.firstName} {this.props.lastName}</p>
         <p> Age : {this.props.age}</p>
         <p>Gender : {this.props.gender}</p>
