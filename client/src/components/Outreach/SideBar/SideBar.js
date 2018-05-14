@@ -33,6 +33,7 @@ class SideBar extends React.Component {
           label="Therapist"
           className="sidebarButton"
           backgroundColor="#B9C6AE"
+          onClick={this.props.therapist}
         />
 
       </div>

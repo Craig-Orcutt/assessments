@@ -42,6 +42,14 @@ class Outreach extends React.Component{
       })
     })
   }
+  sortByTherapist = () => {
+    axios.get(`${this.url}/server/sortByTherapist`)
+    .then((data)=>{
+      this.setState({
+        clients: data.data
+      })
+    })
+  }
   render(){
     const clients = this.state.clients.map((client, index)=>{
       return (
@@ -67,7 +75,7 @@ class Outreach extends React.Component{
     return(
       <div className="outreachContainer">
       <div className="clients">{clients}</div>
-      <SideBar severity={this.sortBySeverity} gender={this.sortByGender} inquiry={this.sortByInquiry} />
+      <SideBar severity={this.sortBySeverity} gender={this.sortByGender} inquiry={this.sortByInquiry} therapist={this.sortByTherapist} />
       </div>
     )
   }
