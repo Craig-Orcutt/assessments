@@ -4,7 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { TextField, Paper, SelectField, MenuItem, DatePicker } from 'material-ui';
 import moment from 'moment'
 import axios from 'axios';
-import Name from './FormComponents/NameAgeGender'
+import Name from '../Form/FormComponents/NameAgeGender'
 import "./Form.css";
 
 class Form extends React.Component {
@@ -42,7 +42,7 @@ class Form extends React.Component {
     });
     // 
     this.addUpSubstances(this.state.substancesUsed); 
-    console.log('this.state', this.state);
+
     
   };
   

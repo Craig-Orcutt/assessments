@@ -24,7 +24,6 @@ module.exports.register = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      console.log("authenticated!", user);
       let currentUser = { username: user.username, id: user.id ,isOutreach: user.isOutreach  };
       res.status(200).json(currentUser);
     });
@@ -50,7 +49,6 @@ module.exports.login = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      console.log("authenticated", user);
       let currentUser = { username: user.username, id: user.id, isOutreach: user.isOutreach };
       console.log('CURRENTUSER', currentUser);
       

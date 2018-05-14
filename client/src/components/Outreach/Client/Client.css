@@ -1,0 +1,11 @@
+.clientContainer {
+  display: grid;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.clients {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  grid-column: 1/ 3
+}

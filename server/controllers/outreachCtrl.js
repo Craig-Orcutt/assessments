@@ -28,7 +28,11 @@ module.exports.getAllClients = (req,res,next) => {
           therapist: client.therapist.username
         }
       )
+    
+      
     })
+    console.log('clientObj', clientObj);
+    
     res.status(200).json(clientObj);
   })
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios'
-import Client from './Client'
+import Client from '../Outreach/Client/Client'
+import SideBar from './SideBar/SideBar'
 import moment from 'moment'
 import "./Outreach.css"
 
@@ -40,7 +41,10 @@ class Outreach extends React.Component{
       )
     })
     return(
+      <div className="outreachContainer">
       <div className="clients">{clients}</div>
+      <SideBar />
+      </div>
     )
   }
 }
