@@ -1,6 +1,6 @@
 .formContainer {
 	margin: 0 10rem;
-	padding: 10px;
+
   display: grid;
   padding: 40px;
   align-self: center
@@ -8,7 +8,6 @@
 .formContainer div {
 	margin: 0 auto;
 	width: 100%;
-
 }
 .checkboxContainer{
   margin: 40px;
@@ -50,9 +49,22 @@
 }
 
 .checkLabel {
-  font-size: 1rem
+	font-size: 1rem;
+	color: #99a1a7;
+	padding-top: 1rem
+}
+.checkLabel input {
+	vertical-align:bottom
 }
 
+.subLabel {
+	display: grid;
+	justify-content: center;
+	color: #99a1a7;
+	font-size: 1.5rem;
+	border-bottom:0.3px solid #99a1a7;
+	margin-bottom: 1rem
+}
 
 .big-checkbox {
 	padding: 8px;

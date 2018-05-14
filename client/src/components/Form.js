@@ -189,8 +189,6 @@ class Form extends React.Component {
           <label className='checkLabel'><Checkbox className="regular-checkbox big-checkbox" value="9"/>Amphetamines</label>
           <label className='checkLabel'><Checkbox className="regular-checkbox big-checkbox" value="10"/>Hallucinogens</label>
           </CheckboxGroup>
-          <br/>
-          <br/>
           <SelectField fullWidth={true} floatingLabelText= 'Frequency Of Use' value={this.state.frequency} onChange={this.handleFrequencyChange}>
           <MenuItem value="daily" primaryText="Daily"/>
           <MenuItem value="monthly" primaryText="Monthly"/>
