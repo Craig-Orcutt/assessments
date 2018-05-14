@@ -4,7 +4,7 @@ module.exports.getAllClients = (req,res,next) => {
   let {Client, Substance, User} = req.app.get('models');
   Client.findAll({include:[Substance, 'therapist']})
   .then(clients=>{
-    // console.log('clientssss', clients);
+    console.log('clientssss', clients);
 
     const clientObj = clients.map(client => {
       return Object.assign(
@@ -25,13 +25,13 @@ module.exports.getAllClients = (req,res,next) => {
           substancesUsed: client.Substances.map(subs => {
               return subs.name.charAt(0).toUpperCase() + subs.name.slice(1)
           }),
-          therapist: client.therapist.username
+          therapist: client.therapist.username,
+          inquiry: client.createdAt
         }
       )
     
       
     })
-    console.log('clientObj', clientObj);
     
     res.status(200).json(clientObj);
   })
