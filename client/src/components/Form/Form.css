@@ -69,6 +69,9 @@
 .big-checkbox {
 	padding: 8px;
 }
+.big-checkbox:focus {
+outline: 0;
+}
 
 .big-checkbox:checked:after {
 	font-size: 18px;

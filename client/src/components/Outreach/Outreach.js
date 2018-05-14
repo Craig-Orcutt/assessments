@@ -18,6 +18,38 @@ class Outreach extends React.Component{
       })
     })
   }
+  sortBySeverity = () => {
+    axios.get(`${this.url}/server/sortBySeverity`)
+    .then((data)=>{
+      this.setState({
+        clients: data.data
+      })
+    })
+  }
+  sortByGender = () => {
+    axios.get(`${this.url}/server/sortByGender`)
+    .then((data)=>{
+      this.setState({
+        clients: data.data
+      })
+    })
+  }
+  sortByInquiry = () => {
+    axios.get(`${this.url}/server/sortByInquiryDate`)
+    .then((data)=>{
+      this.setState({
+        clients: data.data
+      })
+    })
+  }
+  sortByTherapist = () => {
+    axios.get(`${this.url}/server/sortByTherapist`)
+    .then((data)=>{
+      this.setState({
+        clients: data.data
+      })
+    })
+  }
   render(){
     const clients = this.state.clients.map((client, index)=>{
       return (
@@ -36,14 +68,14 @@ class Outreach extends React.Component{
             si_hi={client.si_hi}
             severity={client.severity}
             therapist={client.therapist}
-            inquiryDate={moment(client.inquiry).format("MM/DD/YYYY")}
+            inquiryDate={moment(client.inquiry).format("dddd, MMMM Do YYYY, h:mm:ss a")}
             />
       )
     })
     return(
       <div className="outreachContainer">
       <div className="clients">{clients}</div>
-      <SideBar />
+      <SideBar severity={this.sortBySeverity} gender={this.sortByGender} inquiry={this.sortByInquiry} therapist={this.sortByTherapist} />
       </div>
     )
   }
