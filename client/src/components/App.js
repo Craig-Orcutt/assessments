@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 
 import './App.css';
 import Login from './Login';
-import Form from './Form';
+import Logout from './Logout';
+import Form from "./Form"
 import Outreach from './Outreach';
 
 class App extends Component {
@@ -12,7 +13,9 @@ class App extends Component {
     userid: '',
     userIsOutreach: false,
     isHiddenForm : true,
-    isHiddenOutreach: true
+    isHiddenOutreach: true,
+    isHiddenLogin: false,
+    isHiddenLogout: true
   };
 
 //  
@@ -23,20 +26,27 @@ setUser = (user) => {
     userid: user.id,
     userIsOutreach: user.isOutreach
   })
-  if(this.state.userIsOutreach === false){
+  if(this.state.userIsOutreach !== null){
     this.setState({
-      isHiddenForm: !this.state.isHiddenForm
+      isHiddenLogin: !this.state.isHiddenLogin,
+      isHiddenLogout: !this.state.isHiddenLogout
     })
-  } else if (this.state.userIsOutreach === true) {
-    this.setState({
-      isHiddenOutreach: !this.state.isHiddenOutreach
-    })
-  } else {
-    this.setState({
-      isHiddenForm: true,
-      isHiddenOutreach: true
-    })
+    if(this.state.userIsOutreach === false){
+      this.setState({
+        isHiddenForm: !this.state.isHiddenForm
+      })
+    } else if (this.state.userIsOutreach === true) {
+      this.setState({
+        isHiddenOutreach: !this.state.isHiddenOutreach
+      })
+    } else {
+      this.setState({
+        isHiddenForm: true,
+        isHiddenOutreach: true
+      })
+    }
   }
+  
   
 }
 
@@ -44,7 +54,8 @@ setUser = (user) => {
     
     return (
       <div className="App">
-        <Login setUser={this.setUser} history={this.history}/>
+        {!this.state.isHiddenLogout && <Logout /> }
+        {!this.state.isHiddenLogin && <Login setUser={this.setUser} history={this.history}/>}
         {!this.state.isHiddenForm && <Form setUser={this.state.userid} />}
         {!this.state.isHiddenOutreach && <Outreach />}
       </div>
