@@ -1,8 +1,13 @@
 import React from 'react';
+import {Paper} from 'material-ui';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import "./Client.css"
 
 class Client extends React.Component {
   render() {
     return(
+      <MuiThemeProvider>
+      <Paper className="clientContainer">
       <div id={this.props.id} className="clientCard">
         <p >{this.props.firstName} {this.props.lastName}</p>
         <p> Age : {this.props.age}</p>
@@ -20,6 +25,8 @@ class Client extends React.Component {
         <p>Severity : {this.props.severity}</p>
         <p>Therapist : {this.props.therapist}</p>
       </div>
+      </Paper>
+      </MuiThemeProvider>
     )
   }
 }

@@ -15,8 +15,6 @@ class Register extends React.Component {
     this.setState({
       [e.target.name]: e.target.value
     })
-    console.log('this', this.state.username);
-    
   }
 
   onSubmit = (e) => {
@@ -24,8 +22,7 @@ class Register extends React.Component {
     console.log("this", this.state);
     axios.post(`${this.url}/server/register`, this.state)
     .then((data)=> {
-      console.log('registered', data);
-      console.log('currentUser', data.data.currentUser);
+
       
     })
   }

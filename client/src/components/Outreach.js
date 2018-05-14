@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios'
 import Client from './Client'
+import "./Outreach.css"
 
 class Outreach extends React.Component{
   url = "http://localhost:5000";
