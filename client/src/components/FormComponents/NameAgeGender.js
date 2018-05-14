@@ -1,6 +1,6 @@
 import React from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import { TextField, MenuItem, SelectField } from "material-ui";
+import { TextField } from "material-ui";
 
 class Name extends React.Component {
   // state = {
