@@ -1,4 +1,15 @@
 .sidebarContainer {
   grid-column: 3/-1;
-  border: 1px solid red
+  display: grid;
+  border: 3px solid #99a1a7
+}
+
+.sidebarButton {
+  width: 100%;
+  border-bottom: 1px solid #99a1a7;
+  margin-bottom: 1rem
+}
+
+.sortButtons {
+  
 }
