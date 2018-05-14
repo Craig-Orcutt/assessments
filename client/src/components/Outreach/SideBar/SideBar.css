@@ -1,0 +1,4 @@
+.sidebarContainer {
+  grid-column: 3/-1;
+  border: 1px solid red
+}
