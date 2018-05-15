@@ -50,6 +50,14 @@ class Outreach extends React.Component{
       })
     })
   }
+  
+  deleteClient = () => {
+    axios.post(`${this.url}/server/deleteClient`)
+    .then((data)=>{
+      console.log('data', data);
+      
+    })
+  }
   render(){
     const clients = this.state.clients.map((client, index)=>{
       return (
@@ -74,7 +82,7 @@ class Outreach extends React.Component{
     })
     return(
       <div className="outreachContainer">
-      <div className="clients">{clients}</div>
+      <div className="clients" deleteClient={this.deleteClient}>{clients}</div>
       <SideBar severity={this.sortBySeverity} gender={this.sortByGender} inquiry={this.sortByInquiry} therapist={this.sortByTherapist} />
       </div>
     )

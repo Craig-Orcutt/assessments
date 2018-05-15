@@ -1,5 +1,5 @@
 import React from "react";
-import { Checkbox, CheckboxGroup } from "react-checkbox-group";
+import { Checkbox, CheckboxGroup  } from "react-checkbox-group";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import {
   TextField,
@@ -11,6 +11,7 @@ import {
 import moment from "moment";
 import axios from "axios";
 import Name from "../Form/FormComponents/NameAgeGender";
+import FormModal from "../Form/FormComponents/Dialog";
 import "./Form.css";
 
 class Form extends React.Component {
@@ -31,7 +32,31 @@ class Form extends React.Component {
     showingTreat: false,
     showingMent: false,
     userid: this.props.setUser,
-    points: 0
+    points: 0,
+    open: false
+  };
+  // closes modal dialog
+
+  handleClose = () => {
+    this.setState({open: false ,     
+      firstName: "",
+      lastName: "",
+      age: "",
+      gender: "",
+      substancesUsed: [],
+      frequency: "",
+      useLength: "",
+      lastUse: {},
+      previousSubstance: "",
+      previousMentalHealth: "",
+      si_hi: "",
+      // state of hide/show for text area based on click
+      showingSI: false,
+      showingTreat: false,
+      showingMent: false,
+      userid: this.props.setUser,
+      points: 0,
+    })
   };
   handleGenderChange = (event, index, gender) => this.setState({ gender });
   handleFrequencyChange = (event, index, frequency) =>
@@ -54,7 +79,7 @@ class Form extends React.Component {
       substancesUsed: newSubs
     });
   };
-
+// adds up points of substances checked
   addUpSubstances = subs => {
     let points = 0;
     subs.forEach(data => {
@@ -97,12 +122,13 @@ class Form extends React.Component {
       points: points
     });
   };
+  // checks to see if there is data filled in si/hi, previous treament, or mental health diagnosis. If so a point is added to severity
   fieldCheck = stateCheck => {
     if (stateCheck !== "") {
       this.state.points += 1;
     }
   };
-
+// multiplies the total points based on how long potential client was using for
   useLengthMultiply = points => {
     return new Promise((resolve, reject) => {
       let use = this.state.useLength;
@@ -142,21 +168,30 @@ class Form extends React.Component {
       .then(data => {
         // sets the multiplied points to state
         this.setState({
-          points: data
+          points: data,
+          open: true
         });
         // sends off the state obj to back end for processing
-        return this.sendForm(this.state);
+        this.sendForm(this.state)
+
       });
   };
 
   sendForm = client => {
     axios.post("http://localhost:5000/server/submitForm", client).then(() => {
       console.log("form sent");
-    });
+    })
+    .then(()=>{
+
+    })
   };
+  logout = () => {
+    window.location.reload()
+  }
   render() {
     // sets state of showing or hiding the text area
     const { showingSI, showingMental, showingTreat } = this.state;
+
     return (
       <MuiThemeProvider>
         <Paper className="formContainer">
@@ -352,6 +387,7 @@ class Form extends React.Component {
             </CheckboxGroup>
             <br />
             <button onClick={e => this.onSubmit(e)}>Submit</button>
+            <FormModal open={this.state.open} handleClose={this.handleClose} logout={this.logout}/>
           </div>
         </Paper>
       </MuiThemeProvider>
