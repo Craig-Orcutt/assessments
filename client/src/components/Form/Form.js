@@ -192,7 +192,7 @@ class Form extends React.Component {
     return (
       <MuiThemeProvider>
       <div>
-      <OutreachNavbar user={this.state.setUser} />
+      <OutreachNavbar userDeets={this.props.userDeets} />
 
       <Paper className="formContainer">
           <div>

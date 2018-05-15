@@ -3,11 +3,12 @@ import Logout from '../Logout'
 
 class OutreachNavbar extends React.Component {
 
+  
   render(){
     return(
       <div>
       <h1>Test</h1>
-      <p>Welcome {this.props.userDeets.username}!</p>
+      <p>Welcome! {this.props.userDeets.username}</p>
       <Logout />
       </div>
     )

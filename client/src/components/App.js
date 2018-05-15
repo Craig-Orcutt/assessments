@@ -5,6 +5,7 @@ import Login from "./Login";
 import Form from "../components/Form/Form";
 import Outreach from "../components/Outreach/Outreach";
 
+
 class App extends Component {
   state = {
     username: "",
@@ -52,7 +53,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        
         {!this.state.isHiddenLogin && (
           <Login setUser={this.setUser} history={this.history} />
         )}
