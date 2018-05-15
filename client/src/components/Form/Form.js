@@ -12,6 +12,7 @@ import moment from "moment";
 import axios from "axios";
 import Name from "../Form/FormComponents/NameAgeGender";
 import FormModal from "../Form/FormComponents/Dialog";
+import OutreachNavbar from '../../components/Outreach/Navbar'
 import "./Form.css";
 
 class Form extends React.Component {
@@ -39,9 +40,6 @@ class Form extends React.Component {
 
   handleClose = () => {
     this.setState({open: false ,     
-      firstName: "",
-      lastName: "",
-      age: "",
       gender: "",
       substancesUsed: [],
       frequency: "",
@@ -54,9 +52,8 @@ class Form extends React.Component {
       showingSI: false,
       showingTreat: false,
       showingMent: false,
-      userid: this.props.setUser,
       points: 0,
-    })
+    })    
   };
   handleGenderChange = (event, index, gender) => this.setState({ gender });
   handleFrequencyChange = (event, index, frequency) =>
@@ -194,7 +191,10 @@ class Form extends React.Component {
 
     return (
       <MuiThemeProvider>
-        <Paper className="formContainer">
+      <div>
+      <OutreachNavbar user={this.state.setUser} />
+
+      <Paper className="formContainer">
           <div>
             <Name change={this.change} />
             <SelectField
@@ -390,6 +390,7 @@ class Form extends React.Component {
             <FormModal open={this.state.open} handleClose={this.handleClose} logout={this.logout}/>
           </div>
         </Paper>
+        </div>
       </MuiThemeProvider>
     );
   }
