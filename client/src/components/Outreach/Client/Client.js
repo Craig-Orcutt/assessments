@@ -9,16 +9,17 @@ class Client extends React.Component {
     expanded: false
   }
   handleExpandChange = (expanded) => {
-    this.setState({expanded: expanded});
-    console.log('this.state', this.state);
-    
+    this.setState({expanded: expanded});    
   };
+  handleClick = () => {
+    this.props.deleteClient(this.props.id)
+  }
   render() {
     return(
       <MuiThemeProvider>
       <div id={this.props.id} className="clientCard">
       <Card className={this.state.expanded ? 'clientContainer controller-card expanded' : 'clientContainer controller-card'} onExpandChange={this.handleExpandChange} expanded={this.state.expanded} >
-        <FlatButton onClick={this.props.deleteClient} label="&times;" />
+        <FlatButton onClick={this.handleClick} label="&times;" />
         <CardHeader
           title = {this.clientName}
           subtitle={this.props.inquiryDate}

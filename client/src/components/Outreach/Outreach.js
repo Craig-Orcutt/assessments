@@ -17,7 +17,7 @@ class Outreach extends React.Component{
       this.setState({
         clients: data.data
       })
-      console.log('userdeets', this.props.userDeets);
+      console.log('this.state', this.state);
       
     })
   }
@@ -54,18 +54,22 @@ class Outreach extends React.Component{
     })
   }
   
-  deleteClient = () => {
-    axios.post(`${this.url}/server/deleteClient`)
-    .then((data)=>{
-      console.log('data', data);
-      
-    })
+  deleteClient = (id) => {
+    console.log('button clicked', id );
+
+    axios.post(`${this.url}/server/deleteClient`, {id})
+      .then((data)=>{
+        this.setState({
+          clients: data.data
+        })
+        console.log('this.state', this.state);
+      })
   }
   render(){
     const clients = this.state.clients.map((client, index)=>{
       return (
           <Client key={index} 
-            id={client.clientId}
+            id={client.id}
             firstName={client.first_name}
             lastName={client.last_name}
             age={client.dob}
@@ -80,6 +84,7 @@ class Outreach extends React.Component{
             severity={client.severity}
             therapist={client.therapist}
             inquiryDate={moment(client.inquiry).format("dddd, MMMM Do YYYY, h:mm:ss a")}
+            deleteClient={this.deleteClient}
             />
       )
     })
@@ -87,7 +92,7 @@ class Outreach extends React.Component{
       <div >
       <OutreachNavbar className='nav' userDeets={this.props.userDeets} />
       <div className="outreachContainer">
-      <div className="clients" deleteClient={this.deleteClient}>{clients}</div>
+      <div className="clients" >{clients}</div>
       <SideBar severity={this.sortBySeverity} gender={this.sortByGender} inquiry={this.sortByInquiry} therapist={this.sortByTherapist} />
       </div>
       </div>
