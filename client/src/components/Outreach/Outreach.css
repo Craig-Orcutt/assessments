@@ -1,4 +1,12 @@
 .outreachContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr 0.5fr
+  grid-template-columns: 1fr 1fr 0.5fr;
+  grid-row: 2;
+}
+
+.nav{
+  grid-column: 1/-1;
+  grid-row: 1;
+  height: 3rem;
+  border: 3px solid black
 }

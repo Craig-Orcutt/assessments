@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios'
 import Client from '../Outreach/Client/Client'
 import SideBar from './SideBar/SideBar'
+import OutreachNavbar from './Navbar'
 import moment from 'moment'
 import "./Outreach.css"
 
@@ -16,6 +17,8 @@ class Outreach extends React.Component{
       this.setState({
         clients: data.data
       })
+      console.log('userdeets', this.props.userDeets);
+      
     })
   }
   sortBySeverity = () => {
@@ -81,9 +84,12 @@ class Outreach extends React.Component{
       )
     })
     return(
+      <div >
+      <OutreachNavbar className='nav' userDeets={this.props.userDeets} />
       <div className="outreachContainer">
       <div className="clients" deleteClient={this.deleteClient}>{clients}</div>
       <SideBar severity={this.sortBySeverity} gender={this.sortByGender} inquiry={this.sortByInquiry} therapist={this.sortByTherapist} />
+      </div>
       </div>
     )
   }
