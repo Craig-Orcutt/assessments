@@ -18,7 +18,6 @@ class Outreach extends React.Component{
         clients: data.data
       })
       console.log('this.state', this.state);
-      
     })
   }
   sortBySeverity = () => {
@@ -58,17 +57,22 @@ class Outreach extends React.Component{
     console.log('button clicked', id );
 
     axios.post(`${this.url}/server/deleteClient`, {id})
+    .then((response)=>{
+      return axios.get(`${this.url}/server/outreach`)
       .then((data)=>{
         this.setState({
           clients: data.data
         })
-        console.log('this.state', this.state);
+        console.log('this.state after delete', this.state);
       })
+    })
   }
+
   render(){
+
     const clients = this.state.clients.map((client, index)=>{
       return (
-          <Client key={index} 
+          <Client key={index}
             id={client.id}
             firstName={client.first_name}
             lastName={client.last_name}

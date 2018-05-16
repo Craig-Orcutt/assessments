@@ -4,9 +4,27 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import "./Client.css"
 
 class Client extends React.Component {
+  componentDidMount = () => {
+    if (this.props.severity > 40){
+      this.setState({
+        recommended: 'Inpatient'
+      })
+     } else if (this.props.severity < 39 && this.props.severity < 20){
+        this.setState({
+          recommended: "Partial Hospitalization"
+        }) 
+      }
+        else {
+          this.setState({
+            recommended: "Outpatient"
+          })
+        }
+      }
+
   clientName = `${this.props.firstName } ${this.props.lastName}`;
     state = {
-    expanded: false
+    expanded: false,
+    recommended: ''
   }
   handleExpandChange = (expanded) => {
     this.setState({expanded: expanded});    
@@ -14,11 +32,26 @@ class Client extends React.Component {
   handleClick = () => {
     this.props.deleteClient(this.props.id)
   }
+
+  expand = () => {
+    return this.state.expanded ? 'clientContainer expanded' : 'clientContainer'
+  }
+
+  
+  severityCheck = (score) => {
+    this.expand()
+    if (score >= 40){
+      return 'red'
+    } else {
+      console.log('this isnt wokring', );
+      
+    }
+  }
   render() {
     return(
       <MuiThemeProvider>
-      <div id={this.props.id} className="clientCard">
-      <Card className={this.state.expanded ? 'clientContainer controller-card expanded' : 'clientContainer controller-card'} onExpandChange={this.handleExpandChange} expanded={this.state.expanded} >
+      <div id={this.props.id}>
+      <Card className={this.severityCheck(this.props.severity)} onExpandChange={this.handleExpandChange} expanded={this.state.expanded} >
         <FlatButton onClick={this.handleClick} label="&times;" />
         <CardHeader
           title = {this.clientName}
@@ -48,6 +81,7 @@ class Client extends React.Component {
           <p>Severity : {this.props.severity}</p>
           <Divider />
           <p>Therapist : {this.props.therapist}</p>
+          <p>{this.state.recommended}</p>
         </CardText>
         </Card>
         </div>
