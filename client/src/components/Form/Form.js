@@ -1,16 +1,12 @@
 import React from "react";
-import { Checkbox, CheckboxGroup } from "react-checkbox-group";
+import { Checkbox, CheckboxGroup  } from "react-checkbox-group";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import {
-  TextField,
-  Paper,
-  SelectField,
-  MenuItem,
-  DatePicker
-} from "material-ui";
+import {TextField,Paper,SelectField,MenuItem,DatePicker} from "material-ui";
 import moment from "moment";
 import axios from "axios";
 import Name from "../Form/FormComponents/NameAgeGender";
+import FormModal from "../Form/FormComponents/Dialog";
+import OutreachNavbar from '../../components/Outreach/Navbar'
 import "./Form.css";
 
 class Form extends React.Component {
@@ -31,7 +27,27 @@ class Form extends React.Component {
     showingTreat: false,
     showingMent: false,
     userid: this.props.setUser,
-    points: 0
+    points: 0,
+    open: false
+  };
+  // closes modal dialog
+
+  handleClose = () => {
+    this.setState({open: false ,     
+      gender: "",
+      substancesUsed: [],
+      frequency: "",
+      useLength: "",
+      lastUse: {},
+      previousSubstance: "",
+      previousMentalHealth: "",
+      si_hi: "",
+      // state of hide/show for text area based on click
+      showingSI: false,
+      showingTreat: false,
+      showingMent: false,
+      points: 0,
+    })    
   };
   handleGenderChange = (event, index, gender) => this.setState({ gender });
   handleFrequencyChange = (event, index, frequency) =>
@@ -54,7 +70,7 @@ class Form extends React.Component {
       substancesUsed: newSubs
     });
   };
-
+// adds up points of substances checked
   addUpSubstances = subs => {
     let points = 0;
     subs.forEach(data => {
@@ -92,26 +108,40 @@ class Form extends React.Component {
         default:
           console.log("No substances selected");
       }
-    });
+    });    
     this.setState({
       points: points
     });
   };
-  fieldCheck = stateCheck => {
-    if (stateCheck !== "") {
-      this.state.points += 1;
-    }
-  };
 
+  // checks to see if there is data filled in si/hi, previous treament, or mental health diagnosis. If so a point is added to severity
+  fieldCheck = stateCheck => {
+    return new Promise((resolve,reject)=>{
+      let points = 0
+      if (stateCheck !== "no") {
+        // this.state.points +=1
+        points += 1
+
+        this.setState({
+          points: this.state.points + points
+        },function(){resolve(this.state.points)})
+      } else {
+        console.log('no checked', );
+      }
+    })
+
+
+  };
+// multiplies the total points based on how long potential client was using for
   useLengthMultiply = points => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {      
       let use = this.state.useLength;
       if (use === "0-3 months") {
         points = points * 1;
       } else if (use === "3-6 months") {
         points = points * 2;
       } else if (use === "6-12 months") {
-        points = points * 3;
+        return points = points * 3;
       } else if (use === "1-5 years") {
         points = points * 4;
       } else if (use === "More than 5 years") {
@@ -119,15 +149,21 @@ class Form extends React.Component {
       } else {
         console.log("no length of use identified");
       }
+      console.log('points before resolve', points);
+      
       resolve(points);
     });
   };
   // promise for checking for non empty fields and then adding points to state
   totalPoints = () => {
     return new Promise((resolve, reject) => {
-      this.fieldCheck(this.state.previousSubstance);
-      this.fieldCheck(this.state.si_hi);
-      resolve(this.state.points);
+      this.fieldCheck(this.state.previousSubstance)
+      .then(()=>{
+        this.fieldCheck(this.state.si_hi)
+        .then(()=>{
+          resolve(this.state.points);
+        })
+      })
     });
   };
 
@@ -142,24 +178,38 @@ class Form extends React.Component {
       .then(data => {
         // sets the multiplied points to state
         this.setState({
-          points: data
+          points: data,
+          open: true
         });
         // sends off the state obj to back end for processing
-        return this.sendForm(this.state);
+        this.sendForm(this.state)
+
       });
   };
 
   sendForm = client => {
+    console.log('button clicked?', );
+    
     axios.post("http://localhost:5000/server/submitForm", client).then(() => {
       console.log("form sent");
-    });
+    })
+    .then(()=>{
+
+    })
   };
+  logout = () => {
+    window.location.reload()
+  }
   render() {
     // sets state of showing or hiding the text area
     const { showingSI, showingMental, showingTreat } = this.state;
+
     return (
       <MuiThemeProvider>
-        <Paper className="formContainer">
+      <div>
+      <OutreachNavbar userDeets={this.props.userDeets} />
+
+      <Paper className="formContainer">
           <div>
             <Name change={this.change} />
             <SelectField
@@ -283,6 +333,7 @@ class Form extends React.Component {
               <label>
                 <Checkbox
                   className="regular-checkbox big-checkbox"
+                  onChange={e => this.change(e)}
                   value={"no"}
                 />No
               </label>
@@ -317,6 +368,7 @@ class Form extends React.Component {
               <label>
                 <Checkbox
                   className="regular-checkbox big-checkbox"
+                  onChange={e => this.change(e)}
                   value={"no"}
                 />No
               </label>
@@ -346,14 +398,17 @@ class Form extends React.Component {
               <label>
                 <Checkbox
                   className="regular-checkbox big-checkbox"
+                  onClick={e => this.change(e)}
                   value={"no"}
                 />No
               </label>
             </CheckboxGroup>
             <br />
             <button onClick={e => this.onSubmit(e)}>Submit</button>
+            <FormModal open={this.state.open} handleClose={this.handleClose} logout={this.logout}/>
           </div>
         </Paper>
+        </div>
       </MuiThemeProvider>
     );
   }

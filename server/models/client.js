@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     si_hi: DataTypes.STRING,
     progress: DataTypes.STRING,
     severity: DataTypes.INTEGER
-  }, {tableName: "clients"});
+  }, {tableName: "clients", paranoid:true});
   Client.associate = function(models) {
     // associations can be defined here
     Client.belongsTo(models.User, {
