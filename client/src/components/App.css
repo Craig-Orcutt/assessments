@@ -1,5 +1,21 @@
 .App {
   /* text-align: center; */
-  margin: auto
+  background: rgba(88, 164, 176, 0.8);
+  height: 100vh;
+  margin: auto;
+  display: grid;
 }
 
+.logInForm{
+  display: grid;
+  margin: 10rem 10rem
+}
+
+.logInForm H3 {
+  margin: 0 auto;
+}
+
+.logInFields{
+  grid-row: 2;
+  margin: 0 auto;
+}

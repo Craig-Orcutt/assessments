@@ -1,6 +1,8 @@
 import React from "react";
 import {Link} from 'react-router-dom';
 import { createBrowserHistory as createHistory } from "history";
+import {RaisedButton, Paper, TextField} from 'material-ui'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
 import axios from 'axios';
@@ -15,8 +17,8 @@ class Login extends React.Component {
   handleClick = (e) => {
     e.preventDefault();
     let user = {
-      username: this.userName.value,
-      password: this.userPwd.value,
+      username: this.userName.input.value,
+      password: this.userPwd.input.value,
     };
     console.log('user', user);
     axios.post(`${this.url}/server/login`, user)
@@ -31,19 +33,29 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className="formBody">
+      <MuiThemeProvider>
+      <Paper className="logInForm">
         <h3> Welcome To Assessments. If you are new please register</h3>
         <Link to="/register">
           <button type="button">Register</button>
         </Link>
-        <form>
-          <label>User Name</label>
-          <input type="text" ref={input => {this.userName = input}} />
-          <label>Password</label>
-          <input type="password" ref={input => {this.userPwd = input}} />
-          <button onClick={e => this.handleClick(e)}>Login</button>
+        <form className='logInFields'>
+          <TextField
+            floatingLabelText="User Name"
+            type="text" 
+            ref={input => {this.userName = input}}
+            />
+          <TextField 
+            floatingLabelText="Password"
+            type="password" 
+            ref={input => {this.userPwd = input}}
+          />
+          <RaisedButton
+          label='Login'
+          onClick={e => this.handleClick(e)} />
         </form>
-      </div>
+      </Paper>
+      </MuiThemeProvider>
     );
   }
 }
