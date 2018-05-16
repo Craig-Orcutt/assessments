@@ -1,13 +1,7 @@
 import React from "react";
 import { Checkbox, CheckboxGroup  } from "react-checkbox-group";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import {
-  TextField,
-  Paper,
-  SelectField,
-  MenuItem,
-  DatePicker
-} from "material-ui";
+import {TextField,Paper,SelectField,MenuItem,DatePicker} from "material-ui";
 import moment from "moment";
 import axios from "axios";
 import Name from "../Form/FormComponents/NameAgeGender";
@@ -114,27 +108,40 @@ class Form extends React.Component {
         default:
           console.log("No substances selected");
       }
-    });
+    });    
     this.setState({
       points: points
     });
   };
+
   // checks to see if there is data filled in si/hi, previous treament, or mental health diagnosis. If so a point is added to severity
   fieldCheck = stateCheck => {
-    if (stateCheck !== "") {
-      this.state.points += 1;
-    }
+    return new Promise((resolve,reject)=>{
+      let points = 0
+      if (stateCheck !== "no") {
+        // this.state.points +=1
+        points += 1
+
+        this.setState({
+          points: this.state.points + points
+        },function(){resolve(this.state.points)})
+      } else {
+        console.log('no checked', );
+      }
+    })
+
+
   };
 // multiplies the total points based on how long potential client was using for
   useLengthMultiply = points => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {      
       let use = this.state.useLength;
       if (use === "0-3 months") {
         points = points * 1;
       } else if (use === "3-6 months") {
         points = points * 2;
       } else if (use === "6-12 months") {
-        points = points * 3;
+        return points = points * 3;
       } else if (use === "1-5 years") {
         points = points * 4;
       } else if (use === "More than 5 years") {
@@ -142,15 +149,21 @@ class Form extends React.Component {
       } else {
         console.log("no length of use identified");
       }
+      console.log('points before resolve', points);
+      
       resolve(points);
     });
   };
   // promise for checking for non empty fields and then adding points to state
   totalPoints = () => {
     return new Promise((resolve, reject) => {
-      this.fieldCheck(this.state.previousSubstance);
-      this.fieldCheck(this.state.si_hi);
-      resolve(this.state.points);
+      this.fieldCheck(this.state.previousSubstance)
+      .then(()=>{
+        this.fieldCheck(this.state.si_hi)
+        .then(()=>{
+          resolve(this.state.points);
+        })
+      })
     });
   };
 
@@ -175,6 +188,8 @@ class Form extends React.Component {
   };
 
   sendForm = client => {
+    console.log('button clicked?', );
+    
     axios.post("http://localhost:5000/server/submitForm", client).then(() => {
       console.log("form sent");
     })
@@ -318,6 +333,7 @@ class Form extends React.Component {
               <label>
                 <Checkbox
                   className="regular-checkbox big-checkbox"
+                  onChange={e => this.change(e)}
                   value={"no"}
                 />No
               </label>
@@ -352,6 +368,7 @@ class Form extends React.Component {
               <label>
                 <Checkbox
                   className="regular-checkbox big-checkbox"
+                  onChange={e => this.change(e)}
                   value={"no"}
                 />No
               </label>
@@ -381,6 +398,7 @@ class Form extends React.Component {
               <label>
                 <Checkbox
                   className="regular-checkbox big-checkbox"
+                  onClick={e => this.change(e)}
                   value={"no"}
                 />No
               </label>
