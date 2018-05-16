@@ -54,8 +54,8 @@ class Outreach extends React.Component{
   }
   
   deleteClient = (id) => {
-    console.log('button clicked', id );
-
+    console.log('client id', id);
+    
     axios.post(`${this.url}/server/deleteClient`, {id})
     .then((response)=>{
       return axios.get(`${this.url}/server/outreach`)
@@ -72,7 +72,7 @@ class Outreach extends React.Component{
 
     const clients = this.state.clients.map((client, index)=>{
       return (
-          <Client key={index}
+          <Client key={client.id}
             id={client.id}
             firstName={client.first_name}
             lastName={client.last_name}
@@ -89,6 +89,7 @@ class Outreach extends React.Component{
             therapist={client.therapist}
             inquiryDate={moment(client.inquiry).format("dddd, MMMM Do YYYY, h:mm:ss a")}
             deleteClient={this.deleteClient}
+            recommend={this.recommend}
             />
       )
     })
