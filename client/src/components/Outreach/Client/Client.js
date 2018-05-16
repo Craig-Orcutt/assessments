@@ -4,62 +4,59 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import "./Client.css"
 
 class Client extends React.Component {
-  componentDidMount = () => {
-    if (this.props.severity > 40){
-      this.setState({
-        recommended: 'Inpatient'
-      })
-     } else if (this.props.severity < 39 && this.props.severity < 20){
-        this.setState({
-          recommended: "Partial Hospitalization"
-        }) 
-      }
-        else {
-          this.setState({
-            recommended: "Outpatient"
-          })
-        }
-      }
-
   clientName = `${this.props.firstName } ${this.props.lastName}`;
-    state = {
+  inquiryRecommend = `Inquiry Date :${this.props.inquiryDate} `
+  state = {
     expanded: false,
-    recommended: ''
+    recommend: ''
   }
+  componentDidMount = () => {
+    let severity = this.props.severity
+    if(severity > 40){
+      this.setState({
+        recommend: 'Inpatient'
+      })
+    } else if( severity < 40 && severity > 20) {
+      this.setState({
+        recommend: 'Partial Hospitalization'
+      })
+    } else {
+      this.setState({
+        recommend: 'Outpatient'
+      })
+    }
+  }
+  severityCheck = (score)=>{
+
+      if(this.props.severity > 30){
+        return `red` 
+      } else if(this.props.severity < 40 && this.props.severity >= 20) {
+        return  `orange`
+      } else {
+        return `yellow`
+      }
+    }
   handleExpandChange = (expanded) => {
     this.setState({expanded: expanded});    
   };
   handleClick = () => {
     this.props.deleteClient(this.props.id)
   }
-
-  expand = () => {
-    return this.state.expanded ? 'clientContainer expanded' : 'clientContainer'
-  }
-
-  
-  severityCheck = (score) => {
-    this.expand()
-    if (score >= 40){
-      return 'red'
-    } else {
-      console.log('this isnt wokring', );
-      
-    }
-  }
   render() {
     return(
       <MuiThemeProvider>
-      <div id={this.props.id}>
-      <Card className={this.severityCheck(this.props.severity)} onExpandChange={this.handleExpandChange} expanded={this.state.expanded} >
+      <div id={this.props.id} className="clientCard" >
+      <Card className={this.state.expanded ? 'clientContainer controller-card expanded' : 'clientContainer controller-card'} onExpandChange={this.handleExpandChange} expanded={this.state.expanded} >
         <FlatButton onClick={this.handleClick} label="&times;" />
         <CardHeader
+          className={this.severityCheck(this.props.severity)}
           title = {this.clientName}
-          subtitle={this.props.inquiryDate}
+          subtitle={this.inquiryRecommend}
           actAsExpander={true}
           showExpandableButton={true}
           />
-        <CardText expandable={true}>
+        <CardText expandable={true} >
+          <p>Recommendation: {this.state.recommend}</p>
           <p> Age : {this.props.age}</p>
           <Divider />
           <p>Gender : {this.props.gender}</p>
@@ -81,7 +78,7 @@ class Client extends React.Component {
           <p>Severity : {this.props.severity}</p>
           <Divider />
           <p>Therapist : {this.props.therapist}</p>
-          <p>{this.state.recommended}</p>
+
         </CardText>
         </Card>
         </div>
@@ -91,3 +88,7 @@ class Client extends React.Component {
 }
 
 export default Client
+
+
+
+

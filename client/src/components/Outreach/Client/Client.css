@@ -14,10 +14,22 @@
 
 .expanded {
   position: absolute;
-  width: 95%;
+  width: 94.5%;
 }
 
 .clientCard {
   position: relative;
 
+}
+
+.orange {
+  background: rgba(255, 69, 0, 0.5)
+}
+
+.red {
+  background: rgba(255, 0, 0, 0.8)
+}
+
+.yellow {
+  background: rgba(255, 255, 0, 0.8) 
 }
