@@ -197,7 +197,7 @@ class Form extends React.Component {
     
     axios.post("http://localhost:5000/server/submitForm", client).then(() => {
       console.log("form sent");
-    })
+    }) 
     .then(()=>{
 
     })

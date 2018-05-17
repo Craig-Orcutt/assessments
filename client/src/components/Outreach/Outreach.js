@@ -109,7 +109,8 @@ class Outreach extends React.Component{
 
     const clients = this.state.clients.map((client, index)=>{
       return (
-          <Client key={client.id}
+          <Client 
+            key={client.id}
             id={client.id}
             firstName={client.first_name}
             lastName={client.last_name}
