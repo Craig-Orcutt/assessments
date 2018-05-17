@@ -1,11 +1,13 @@
 import React from 'react';
-import {Card, CardActions, CardHeader, CardText, Divider, FlatButton} from 'material-ui';
+import {Card, CardActions, CardHeader, CardText, Divider, FlatButton, } from 'material-ui';
+import {Button, TextField} from "@material-ui/core";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import "./Client.css"
 
 class Client extends React.Component {
   clientName = `${this.props.firstName } ${this.props.lastName}`;
-  inquiryRecommend = `Inquiry Date :${this.props.inquiryDate} `
+  inquiryRecommend = `Inquiry Date :${this.props.inquiryDate} `;
+  comment = React.createRef();
   state = {
     expanded: false,
     recommend: ''
@@ -28,7 +30,7 @@ class Client extends React.Component {
   }
   severityCheck = (score)=>{
 
-      if(this.props.severity > 30){
+      if(this.props.severity > 40){
         return `red` 
       } else if(this.props.severity < 40 && this.props.severity >= 20) {
         return  `orange`
@@ -78,7 +80,18 @@ class Client extends React.Component {
           <p>Severity : {this.props.severity}</p>
           <Divider />
           <p>Therapist : {this.props.therapist}</p>
-
+          <TextField
+          label='Client Comments'
+          multiline
+          rowsMax="4"
+          fullWidth
+          margin="normal"
+          value={this.props.comment}
+          onChange={this.props.change}
+        />
+        <CardActions>
+          <Button size='small'>Add Comment</Button>
+        </CardActions>
         </CardText>
         </Card>
         </div>

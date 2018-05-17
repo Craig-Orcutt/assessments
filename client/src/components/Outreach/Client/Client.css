@@ -19,17 +19,20 @@
 
 .clientCard {
   position: relative;
-
 }
 
 .orange {
-  background: rgba(255, 69, 0, 0.5)
+  background: rgba(255, 155, 113, 0.9);
+  border-radius: 10px
 }
 
 .red {
-  background: rgba(255, 0, 0, 0.8)
+  background: rgba(255, 155, 113, 0.6);
+  border-radius: 10px
 }
 
 .yellow {
-  background: rgba(255, 255, 0, 0.8) 
+  background: rgba(255, 255, 0, 0.5) ;
+  /* border: 1px solid #99a1a7; */
+  border-radius: 10px
 }
