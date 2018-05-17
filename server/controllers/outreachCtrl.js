@@ -4,11 +4,7 @@ module.exports.getAllClients = (req,res,next) => {
   let {Client, Substance, User} = req.app.get('models');
   Client.findAll({include:[Substance, 'therapist']})
   .then(clients=>{
-    console.log('clients', clients);
-    
     const clientObj = clients.map(client => {
-
-      
       return Object.assign(
         {},
         {
@@ -34,21 +30,15 @@ module.exports.getAllClients = (req,res,next) => {
           progress: client.progress
         }
       )
-    
-      
     })
-    
     res.status(200).json(clientObj);
   })
-
 }
 
 module.exports.sortBySeverity = (req,res,next) => {
   let {Client, Substance, User} = req.app.get('models');
   Client.findAll({include:[Substance, 'therapist'], order:[['severity' , 'DESC']]})
   .then(clients=>{
-    console.log('clientssss', clients);
-
     const clientObj = clients.map(client => {
       return Object.assign(
         {},
@@ -74,22 +64,15 @@ module.exports.sortBySeverity = (req,res,next) => {
           progress: client.progress
         }
       )
-    
-      
     })
-    
     res.status(200).json(clientObj);
   })
-
 }
 
 module.exports.sortByGender = (req,res,next) => {
   let {Client, Substance, User} = req.app.get('models');
   Client.findAll({include:[Substance, 'therapist'], order:[['gender' , 'DESC']]})
   .then(clients=>{
-    console.log('clients', clients);
-    
-
     const clientObj = clients.map(client => {
       return Object.assign(
         {},
@@ -115,22 +98,15 @@ module.exports.sortByGender = (req,res,next) => {
           progress: client.progress
         }
       )
-    
-      
     })
-    
     res.status(200).json(clientObj);
   })
-
 }
 
 module.exports.sortByInquiryDate = (req,res,next) => {
   let {Client, Substance, User} = req.app.get('models');
   Client.findAll({include:[Substance, 'therapist'], order:[['createdAt' , 'DESC']]})
   .then(clients=>{
-    console.log('clients', clients);
-    
-
     const clientObj = clients.map(client => {
       return Object.assign(
         {},
@@ -156,13 +132,9 @@ module.exports.sortByInquiryDate = (req,res,next) => {
           progress: client.progress
         }
       )
-    
-      
     })
-    
     res.status(200).json(clientObj);
   })
-
 }
 
 module.exports.sortByTherapist = (req,res,next) => {
@@ -170,8 +142,6 @@ module.exports.sortByTherapist = (req,res,next) => {
   Client.findAll({include:[Substance, 'therapist'], order:[['therapist_id' , 'DESC']]})
   .then(clients=>{
     console.log('clients', clients);
-    
-
     const clientObj = clients.map(client => {
       return Object.assign(
         {},
@@ -197,13 +167,9 @@ module.exports.sortByTherapist = (req,res,next) => {
           progress: client.progress
         }
       )
-    
-      
     })
-    
     res.status(200).json(clientObj);
   })
-
 }
 
 module.exports.deleteClient = (req,res,next) => {
@@ -219,5 +185,14 @@ module.exports.deleteClient = (req,res,next) => {
 module.exports.updateClient = (req,res,next)=>{
   let {Client} = req.app.get('models');
   console.log('req.body', req.body);
-  
+  Client.find({where: {id: req.body.id}})
+    .then(foundClient => {
+      return foundClient.updateAttributes({
+        comment: req.body.comment
+      })
+    })
+    .then((data)=>{
+      console.log('data', data );
+      res.status(200).json(data)
+    })
 }
