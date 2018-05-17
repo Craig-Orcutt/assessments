@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     mental_health: DataTypes.STRING,
     si_hi: DataTypes.STRING,
     progress: DataTypes.STRING,
-    severity: DataTypes.INTEGER,
-    comment: DataTypes.INTEGER
+    severity: DataTypes.FLOAT,
+    comment: DataTypes.STRING
   }, {tableName: "clients", paranoid:true});
   Client.associate = function(models) {
     // associations can be defined here
