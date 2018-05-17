@@ -23,6 +23,7 @@ class Outreach extends React.Component{
       console.log('this.state', this.state);
     })
   }
+  // Sort functions to call db for sort buttons
   sortBySeverity = () => {
     axios.get(`${this.url}/server/sortBySeverity`)
     .then((data)=>{
@@ -58,7 +59,7 @@ class Outreach extends React.Component{
   
   deleteClient = (id) => {
     console.log('client id', id);
-    // deletes client and then gets the updated list of clientsq
+    // deletes client and then gets the updated list of clients
     axios.post(`${this.url}/server/deleteClient`, {id})
     .then((response)=>{
       return axios.get(`${this.url}/server/outreach`)
@@ -70,12 +71,27 @@ class Outreach extends React.Component{
       })
     })
   }
+
   change = (e) =>{
     
     this.setState({
       comment: e.target.value
     })    
     console.log('change is working?', this.state.comment);
+  }
+
+  addComment = (id) => {
+    let comment = this.state.comment
+    axios.post(`${this.url}/server/updateClient`, {comment, id})
+    .then((response)=>{
+      return axios.get(`${this.url}/server/outreach`)
+      .then((data)=>{
+        this.setState({
+          clients: data.data
+        })
+        console.log('this.state after delete', this.state);
+      })
+    })
   }
   // searchFilterFunc = () => {
   //   // get copy of clients 
@@ -115,7 +131,7 @@ class Outreach extends React.Component{
             clientComment={client.comment}
             change={this.change}
             comment={this.state.comment}
-
+            addComment={this.addComment}
             />
       )
     })

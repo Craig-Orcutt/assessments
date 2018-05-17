@@ -1,0 +1,20 @@
+.register {
+  display: grid;
+  margin: 10rem 20rem
+}
+
+.registerForm {
+  display: grid;
+  grid-row: 2;
+  margin: 0 auto;
+}
+
+
+
+.registerEl {
+  margin: 0 auto;
+  grid-auto-flow: row
+}
+
+
+

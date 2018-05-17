@@ -1,7 +1,7 @@
 import React from "react";
 import { Checkbox, CheckboxGroup  } from "react-checkbox-group";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import {TextField,Paper,SelectField,MenuItem,DatePicker} from "material-ui";
+import {TextField,Paper,SelectField,MenuItem,DatePicker, RaisedButton} from "material-ui";
 import moment from "moment";
 import axios from "axios";
 import Name from "../Form/FormComponents/NameAgeGender";
@@ -180,6 +180,8 @@ class Form extends React.Component {
       })
       .then(data => {
         // sets the multiplied points to state
+        console.log('this.state', this.state);
+        
         this.setState({
           points: data,
           open: true
@@ -336,24 +338,19 @@ class Form extends React.Component {
               <label>
                 <Checkbox
                   className="regular-checkbox big-checkbox"
-                  onChange={e => this.change(e)}
+                  onClick={e => this.change(e)}
                   value={"no"}
                 />No
               </label>
               <br />
               <br />
             </CheckboxGroup>
-            <label>Previous Mental Health Diagnosis</label>
-            <CheckboxGroup
-              checkboxDepth={2}
-              name="previouseMentalHealth"
-              className="textShow">
+            <label>Previous Mental Health Issues</label>
+            <CheckboxGroup checkboxDepth={2} className="textShow" name="previousMentalhealth">
               <label>
                 <Checkbox
                   className="regular-checkbox big-checkbox"
-                  onClick={() =>
-                    this.setState({ showingMental: !showingMental })
-                  }
+                  onClick={() => this.setState({ showingMental: !showingMental })}
                 />Yes
               </label>
               <TextField
@@ -371,13 +368,13 @@ class Form extends React.Component {
               <label>
                 <Checkbox
                   className="regular-checkbox big-checkbox"
-                  onChange={e => this.change(e)}
+                  onClick={e => this.change(e)}
                   value={"no"}
                 />No
               </label>
-              <br />
-              <br />
             </CheckboxGroup>
+            <br/>
+            <br/>
             <label>Previous SI/HI?</label>
             <CheckboxGroup checkboxDepth={2} className="textShow" name="si_hi">
               <label>
@@ -407,7 +404,7 @@ class Form extends React.Component {
               </label>
             </CheckboxGroup>
             <br />
-            <button onClick={e => this.onSubmit(e)}>Submit</button>
+            <RaisedButton label="Submit Inquiry" fullWidth onClick={this.onSubmit} />
             <FormModal open={this.state.open} handleClose={this.handleClose} logout={this.logout}/>
           </div>
         </Paper>

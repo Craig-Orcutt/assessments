@@ -80,6 +80,8 @@ class Client extends React.Component {
           <p>Severity : {this.props.severity}</p>
           <Divider />
           <p>Therapist : {this.props.therapist}</p>
+          <Divider />
+          <p>Comments : {this.props.clientComment}</p>
           <TextField
           label='Client Comments'
           multiline
@@ -90,7 +92,7 @@ class Client extends React.Component {
           onChange={this.props.change}
         />
         <CardActions>
-          <Button onClick={this.props.addComment} size='large'>Add Comment</Button>
+          <Button id={this.props.id} onClick={()=> this.props.addComment(this.props.id)} size='large'>Add Comment</Button>
         </CardActions>
         </CardText>
         </Card>
