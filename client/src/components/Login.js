@@ -35,7 +35,7 @@ class Login extends React.Component {
     return (
       <MuiThemeProvider>
         <Paper className="logInForm">
-          <h3> Welcome To Assessments. If you are new please register</h3>
+          <h3> Welcome To Quick Assess. If you are new please register.</h3>
           <form className="logInFields">
             <TextField
               floatingLabelText="User Name"
