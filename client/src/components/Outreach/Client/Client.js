@@ -90,7 +90,7 @@ class Client extends React.Component {
           onChange={this.props.change}
         />
         <CardActions>
-          <Button size='small'>Add Comment</Button>
+          <Button onClick={this.props.addComment} size='large'>Add Comment</Button>
         </CardActions>
         </CardText>
         </Card>

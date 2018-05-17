@@ -1,15 +1,22 @@
 import React from 'react';
 import './SideBar.css';
-import {RaisedButton, Paper } from 'material-ui';
+import {RaisedButton, Paper, TextField } from 'material-ui';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 class SideBar extends React.Component {
-  
+  filter = React.createRef();
+
   render(){
     return(
       <MuiThemeProvider>
       <Paper>
       <div className="sidebarContainer">SideBar
-
+      <TextField
+        hintText="Search"
+        onChange={this.props.change}
+        ref={input => {
+          this.filter = input;
+        }}
+       />
       <div className="sortButtons"></div>
         <RaisedButton 
           label="Severity"
