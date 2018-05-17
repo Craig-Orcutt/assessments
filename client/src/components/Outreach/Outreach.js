@@ -9,7 +9,10 @@ import "./Outreach.css"
 class Outreach extends React.Component{
   url = "http://localhost:5000";
   state = {
-    clients : []
+    clients : [
+    ],
+    comment: '',
+    searchFilter: ''
   }
   componentDidMount = () => {
     axios.get(`${this.url}/server/outreach`)
@@ -55,7 +58,7 @@ class Outreach extends React.Component{
   
   deleteClient = (id) => {
     console.log('client id', id);
-    
+    // deletes client and then gets the updated list of clientsq
     axios.post(`${this.url}/server/deleteClient`, {id})
     .then((response)=>{
       return axios.get(`${this.url}/server/outreach`)
@@ -67,7 +70,25 @@ class Outreach extends React.Component{
       })
     })
   }
+  change = (e) =>{
+    
+    this.setState({
+      comment: e.target.value
+    })    
+    console.log('change is working?', this.state.comment);
+  }
+  // searchFilterFunc = () => {
+  //   // get copy of clients 
+  //   const clients = [...this.state.clients];
+  //   // get value of what has been typed in
+  //   let searchFilter = this.state.searchFilter
+  //   // filter out clients that match criteria
 
+  //   // set state of new clients
+  //   // this.setState([ clients ]);
+  
+  // }
+  
   render(){
 
     const clients = this.state.clients.map((client, index)=>{
@@ -90,6 +111,11 @@ class Outreach extends React.Component{
             inquiryDate={moment(client.inquiry).format("dddd, MMMM Do YYYY, h:mm:ss a")}
             deleteClient={this.deleteClient}
             recommend={this.recommend}
+            progress={client.progress}
+            clientComment={client.comment}
+            change={this.change}
+            comment={this.state.comment}
+
             />
       )
     })
@@ -98,7 +124,7 @@ class Outreach extends React.Component{
       <OutreachNavbar className='nav' userDeets={this.props.userDeets} />
       <div className="outreachContainer">
       <div className="clients" >{clients}</div>
-      <SideBar severity={this.sortBySeverity} gender={this.sortByGender} inquiry={this.sortByInquiry} therapist={this.sortByTherapist} />
+      <SideBar change={this.change} severity={this.sortBySeverity} gender={this.sortByGender} inquiry={this.sortByInquiry} therapist={this.sortByTherapist} />
       </div>
       </div>
     )
