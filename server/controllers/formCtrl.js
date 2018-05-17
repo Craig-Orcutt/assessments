@@ -29,8 +29,9 @@ module.exports.addClientForm = (req,res,next)=> {
     mental_health: req.body.previousMentalHealth,
     si_hi: req.body.si_hi,
     severity: req.body.points,
-    therapist_id: req.body.userid
-
+    therapist_id: req.body.userid,
+    comment: req.body.comment,
+    progress: req.body.progress
   })
     .then((data)=>{
       console.log('data', data.dataValues.id);

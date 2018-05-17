@@ -29,7 +29,9 @@ module.exports.getAllClients = (req,res,next) => {
               return subs.name.charAt(0).toUpperCase() + subs.name.slice(1)
           }),
           therapist: client.therapist.username,
-          inquiry: client.createdAt
+          inquiry: client.createdAt,
+          comment: client.comment,
+          progress: client.progress
         }
       )
     
@@ -67,7 +69,9 @@ module.exports.sortBySeverity = (req,res,next) => {
               return subs.name.charAt(0).toUpperCase() + subs.name.slice(1)
           }),
           therapist: client.therapist.username,
-          inquiry: client.createdAt
+          inquiry: client.createdAt,
+          comment: client.comment,
+          progress: client.progress
         }
       )
     
@@ -106,7 +110,9 @@ module.exports.sortByGender = (req,res,next) => {
               return subs.name.charAt(0).toUpperCase() + subs.name.slice(1)
           }),
           therapist: client.therapist.username,
-          inquiry: client.createdAt
+          inquiry: client.createdAt,
+          comment: client.comment,
+          progress: client.progress
         }
       )
     
@@ -145,7 +151,9 @@ module.exports.sortByInquiryDate = (req,res,next) => {
               return subs.name.charAt(0).toUpperCase() + subs.name.slice(1)
           }),
           therapist: client.therapist.username,
-          inquiry: client.createdAt
+          inquiry: client.createdAt,
+          comment: client.comment,
+          progress: client.progress
         }
       )
     
@@ -184,7 +192,9 @@ module.exports.sortByTherapist = (req,res,next) => {
               return subs.name.charAt(0).toUpperCase() + subs.name.slice(1)
           }),
           therapist: client.therapist.username,
-          inquiry: client.createdAt
+          inquiry: client.createdAt,
+          comment: client.comment,
+          progress: client.progress
         }
       )
     
@@ -199,9 +209,15 @@ module.exports.sortByTherapist = (req,res,next) => {
 module.exports.deleteClient = (req,res,next) => {
   console.log('client', req.body.id);
   let id = req.body.id
-  let {Client, Substance, User} = req.app.get('models');
+  let {Client} = req.app.get('models');
   Client.destroy({where:{id}})
   .then((data)=>{
     res.status(200).json(data)
   })
+}
+
+module.exports.updateClient = (req,res,next)=>{
+  let {Client} = req.app.get('models');
+  console.log('req.body', req.body);
+  
 }

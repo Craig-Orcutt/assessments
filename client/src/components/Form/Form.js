@@ -28,7 +28,9 @@ class Form extends React.Component {
     showingMent: false,
     userid: this.props.setUser,
     points: 0,
-    open: false
+    open: false,
+    comment: '',
+    progress: ''
   };
   // closes modal dialog
 
@@ -63,6 +65,7 @@ class Form extends React.Component {
     //
     this.addUpSubstances(this.state.substancesUsed);
   };
+  
 
   // setting state of checkbox group
   substancesChecked = newSubs => {
