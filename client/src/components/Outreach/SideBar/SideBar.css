@@ -1,15 +1,22 @@
-.sidebarContainer {
-  grid-column: 3/-1;
-  display: grid;
-  border: 3px solid #99a1a7;
-  grid-row: 1/-1
-}
+
 
 .sidebarButton {
-  width: 100%;
+  width: 20%;
   border-bottom: 1px solid #99a1a7;
-  margin-bottom: 1rem
+  color:#99a1a7;
+  border-radius: 10px !important;
 }
 
-/* .sortButtons {
-} */
+.sidebarContainer {
+  grid-row: 1;
+  grid-column: 1/-1;
+}
+
+.sortButtons {
+  display: flex;
+  justify-content: space-around
+}
+
+.logout {
+  border-bottom: 1px solid #99a1a7 !important
+}

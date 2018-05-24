@@ -1,53 +1,52 @@
-import React from 'react';
-import './SideBar.css';
-import {RaisedButton, Paper, TextField } from 'material-ui';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import React from "react";
+import "./SideBar.css";
+import { RaisedButton, Paper } from "material-ui";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import Logout from "../../Logout";
 class SideBar extends React.Component {
   filter = React.createRef();
 
-  render(){
-    return(
+  render() {
+    return (
       <MuiThemeProvider>
-      <Paper>
-      <div className="sidebarContainer">SideBar
-      <TextField
-        hintText="Search"
-        onChange={this.props.change}
-        ref={input => {
-          this.filter = input;
-        }}
-       />
-      <div className="sortButtons"></div>
-        <RaisedButton 
-          label="Severity"
-          className="sidebarButton"
-          backgroundColor="#B9C6AE"
-          onClick={this.props.severity}
-        />
-        <RaisedButton 
-          label="Gender"
-          className="sidebarButton"
-          backgroundColor="#B9C6AE"
-          onClick={this.props.gender}
-        />
-        <RaisedButton 
-          label="Inquiry Date"
-          className="sidebarButton"
-          backgroundColor="#B9C6AE"
-          onClick={this.props.inquiry}
-        />
-        <RaisedButton 
-          label="Therapist"
-          className="sidebarButton"
-          backgroundColor="#B9C6AE"
-          onClick={this.props.therapist}
-        />
-
-      </div>
-      </Paper>
+        <div className="sidebarContainer">
+          <Paper style={{background: 'none'}}>
+              <div className="sortButtons">
+              <RaisedButton
+                label="Severity"
+                className="sidebarButton"
+                backgroundColor="#BADA55"
+                labelColor='white'
+                onClick={this.props.severity}
+              />
+              <RaisedButton
+                label="Gender"
+                className="sidebarButton"
+                backgroundColor="#BADA55"
+                labelColor='white'
+                onClick={this.props.gender}
+              />
+              <RaisedButton
+                label="Inquiry Date"
+                className="sidebarButton"
+                backgroundColor="#BADA55"
+                labelColor='white'
+                onClick={this.props.inquiry}
+              />
+              <RaisedButton
+                label="Therapist"
+                className="sidebarButton"
+                backgroundColor="#BADA55"
+                labelColor='white'
+                onClick={this.props.therapist}
+              />
+              <Logout className='sidebarButton'/>
+            </div>
+          </Paper>
+        </div>
       </MuiThemeProvider>
-    )
+    );
   }
 }
 
-export default SideBar
+export default SideBar;

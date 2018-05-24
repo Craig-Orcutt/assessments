@@ -1,15 +1,15 @@
 import React from 'react';
-import Logout from '../Logout'
+import './Navbar.css'
 
 class OutreachNavbar extends React.Component {
 
   
   render(){
     return(
-      <div>
-      <p>Quick Assess</p>
-      <p>Welcome! {this.props.userDeets.username}</p>
-      <Logout />
+      <div className='navBarContainer'>
+      <p className='logo'>Quick Assess</p>
+      <p className='welcomeName'>Welcome! {this.props.userDeets.username}</p>
+      
       </div>
     )
   }

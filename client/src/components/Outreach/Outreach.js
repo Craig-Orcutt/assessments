@@ -93,17 +93,7 @@ class Outreach extends React.Component{
       })
     })
   }
-  // searchFilterFunc = () => {
-  //   // get copy of clients 
-  //   const clients = [...this.state.clients];
-  //   // get value of what has been typed in
-  //   let searchFilter = this.state.searchFilter
-  //   // filter out clients that match criteria
 
-  //   // set state of new clients
-  //   // this.setState([ clients ]);
-  
-  // }
   
   render(){
 
@@ -141,7 +131,7 @@ class Outreach extends React.Component{
       <OutreachNavbar className='nav' userDeets={this.props.userDeets} />
       <div className="outreachContainer">
       <div className="clients" >{clients}</div>
-      <SideBar change={this.change} severity={this.sortBySeverity} gender={this.sortByGender} inquiry={this.sortByInquiry} therapist={this.sortByTherapist} />
+      <SideBar severity={this.sortBySeverity} gender={this.sortByGender} inquiry={this.sortByInquiry} therapist={this.sortByTherapist} />
       </div>
       </div>
     )

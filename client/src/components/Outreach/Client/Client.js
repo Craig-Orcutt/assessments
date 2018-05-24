@@ -18,7 +18,7 @@ class Client extends React.Component {
       this.setState({
         recommend: 'Inpatient'
       })
-    } else if( severity < 40 && severity > 20) {
+    } else if( severity < 40 && severity >= 20) {
       this.setState({
         recommend: 'Partial Hospitalization'
       })
@@ -30,7 +30,7 @@ class Client extends React.Component {
   }
   severityCheck = (score)=>{
 
-      if(this.props.severity > 40){
+      if(this.props.severity >= 40){
         return `red` 
       } else if(this.props.severity < 40 && this.props.severity >= 20) {
         return  `orange`
@@ -48,7 +48,7 @@ class Client extends React.Component {
     return(
       <MuiThemeProvider>
       <div id={this.props.id} className="clientCard" >
-      <Card className={this.state.expanded ? 'clientContainer controller-card expanded' : 'clientContainer controller-card'} onExpandChange={this.handleExpandChange} expanded={this.state.expanded} >
+      <Card style={{  background: 'rgba(245, 245, 245, 0.9)'}}className={this.state.expanded ? 'clientContainer controller-card expanded' : 'clientContainer controller-card'} onExpandChange={this.handleExpandChange} expanded={this.state.expanded} >
         <FlatButton onClick={this.handleClick} label="&times;" />
         <CardHeader
           className={this.severityCheck(this.props.severity)}
