@@ -310,7 +310,7 @@ class Form extends React.Component {
             />
             <br />
             <br />
-            <label>Previous Substance Abuse Treament</label>
+            <label>Previous Substance Abuse Treatment</label>
             <CheckboxGroup
               checkboxDepth={2}
               className="textShow"

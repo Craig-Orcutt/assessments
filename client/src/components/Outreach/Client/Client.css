@@ -3,22 +3,25 @@
   margin: 1rem;
   padding: 1rem;
   border-bottom:#99a1a7;
-
+  
 }
 
 .clients {
   display: grid;
   grid-template-columns: repeat(2,1fr);
-  grid-column: 1/ 3
+  grid-column: 1/ -1
 }
+
+
 
 .expanded {
   position: absolute;
-  width: 94.5%;
+  width: 96.8%;
 }
 
 .clientCard {
   position: relative;
+
 }
 
 .orange {
@@ -27,7 +30,7 @@
 }
 
 .red {
-  background: rgba(255, 16, 31, 1);
+  background: rgba(255, 16, 31, 0.7);
   border-radius: 10px
 }
 
